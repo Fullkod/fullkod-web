@@ -1,30 +1,85 @@
 import Image from "next/image";
+import { Barra, Simbolo } from "@/components/simbolo";
+import { Mockup } from "@/components/mockup";
 import { CONTACTO } from "@/lib/contacto";
+
+const proyectos = [
+  {
+    nombre: "LensSpace",
+    texto:
+      "Gestión completa para ópticas: clientes, recetas, ventas, pagos, producción y entregas, en un solo panel.",
+    etiquetas: ["Multiempresa", "Pagos", "Producción"],
+    tipo: "panel" as const,
+    acento: "#F2B705",
+    fondo: "#FFFFFF",
+    texto_color: "#17132A",
+  },
+  {
+    nombre: "Turno Flash",
+    texto:
+      "Turnos y venta de pasajes para peluquerías, barberías, clínicas y transportistas: panel web, app Android y página pública.",
+    etiquetas: ["Turnos", "Android", "Pasajes"],
+    tipo: "movil" as const,
+    acento: "#F2B705",
+    fondo: "#17132A",
+    texto_color: "#FFFFFF",
+  },
+  {
+    nombre: "Turnia",
+    texto:
+      "Turnos y horarios para entornos de salud: calendario interactivo, roles y exportación, en web y apps iOS y Android.",
+    etiquetas: ["Calendario", "Roles", "iOS y Android"],
+    tipo: "panel" as const,
+    acento: "#5B21B6",
+    fondo: "#EFEAFB",
+    texto_color: "#17132A",
+  },
+  {
+    nombre: "Follow It",
+    texto:
+      "Gestión de repartos con tres roles —negocio, mensajero y cliente— y seguimiento en tiempo real.",
+    etiquetas: ["Repartos", "Tiempo real", "Móvil"],
+    tipo: "movil" as const,
+    acento: "#F2B705",
+    fondo: "#5B21B6",
+    texto_color: "#FFFFFF",
+  },
+  {
+    nombre: "klauShop",
+    texto:
+      "Tienda en línea con CMS propio: catálogo, pedidos y panel de administración hechos a medida.",
+    etiquetas: ["E-commerce", "CMS propio", "Pedidos"],
+    tipo: "panel" as const,
+    acento: "#5B21B6",
+    fondo: "#FDF6DD",
+    texto_color: "#17132A",
+  },
+];
 
 const servicios = [
   {
     n: "01",
-    titulo: "Aplicaciones web a medida",
+    titulo: "Aplicaciones web y móviles",
     texto:
-      "Paneles, portales y herramientas internas diseñados alrededor de cómo trabaja tu equipo, no al revés.",
+      "Paneles, portales y apps Android/iOS diseñados alrededor de cómo trabaja tu equipo.",
   },
   {
     n: "02",
-    titulo: "Plataformas y e-commerce",
+    titulo: "Plataformas SaaS y e-commerce",
     texto:
-      "Tiendas y marketplaces con catálogo, pagos, pedidos y reportes propios, sin depender de plantillas cerradas.",
+      "Multiempresa, pagos, pedidos y reportes propios, sin depender de plantillas cerradas.",
   },
   {
     n: "03",
     titulo: "Automatización e IA",
     texto:
-      "Procesos repetitivos convertidos en flujos que funcionan solos, con asistentes que responden con tus datos.",
+      "Procesos repetitivos convertidos en flujos que funcionan solos, con asistentes que usan tus datos.",
   },
   {
     n: "04",
     titulo: "Integraciones y mantenimiento",
     texto:
-      "Conectamos tu software con lo que ya usas y lo mantenemos vivo, con monitoreo y mejoras continuas.",
+      "Conectamos tu software con lo que ya usas, y lo mantenemos vivo y mejorando.",
   },
 ];
 
@@ -32,41 +87,40 @@ const pasos = [
   {
     titulo: "Escuchamos",
     texto:
-      "Entendemos el negocio, el problema real y qué significa «listo» para ti antes de escribir una línea de código.",
+      "Entendemos el negocio y qué significa «listo» para ti antes de escribir una línea de código.",
   },
   {
-    titulo: "Diseñamos y construimos",
+    titulo: "Construimos",
     texto:
-      "Prototipos con tu equipo, entregas cortas y revisables. Ves avances reales cada semana.",
+      "Entregas cortas y revisables. Ves avances reales cada semana, no al final.",
   },
   {
-    titulo: "Lanzamos y acompañamos",
+    titulo: "Acompañamos",
     texto:
       "Despliegue, formación y soporte. El software sigue creciendo con tu negocio.",
   },
 ];
 
-function Logo({ className = "" }: { className?: string }) {
-  return (
-    <Image
-      src="/brand/fullkod-horizontal-white.svg"
-      alt="Fullkod"
-      width={992}
-      height={256}
-      unoptimized
-      className={className}
-    />
-  );
-}
+const ambitos = [
+  "Ópticas",
+  "Clínicas",
+  "Peluquerías",
+  "Repartos",
+  "E-commerce",
+  "Turnos",
+  "Automatización",
+  "IA",
+];
 
-function BotonPrincipal({ href, children }: { href: string; children: React.ReactNode }) {
+function Etiqueta({ children, oscuro = false }: { children: React.ReactNode; oscuro?: boolean }) {
   return (
-    <a
-      href={href}
-      className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-3 font-display text-base font-semibold text-ink transition hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+    <p
+      className={`font-mono text-xs uppercase tracking-[0.22em] ${
+        oscuro ? "text-gold" : "text-violet"
+      }`}
     >
       {children}
-    </a>
+    </p>
   );
 }
 
@@ -78,19 +132,27 @@ export default function Home() {
   return (
     <>
       {/* Cabecera */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-violet-night/85 backdrop-blur">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-violet-night/70 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <a href="#inicio" aria-label="Fullkod, inicio">
-            <Logo className="h-7 w-auto" />
+          <a href="#inicio" aria-label="Fullkod, inicio" className="flex items-center gap-2.5">
+            <Simbolo className="h-7 w-7" />
+            <Image
+              src="/brand/fullkod-wordmark-white.svg"
+              alt="Fullkod"
+              width={600}
+              height={200}
+              unoptimized
+              className="h-5 w-auto"
+            />
           </a>
-          <nav className="hidden items-center gap-8 font-display text-sm text-white/80 md:flex">
-            <a href="#servicios" className="hover:text-gold">Servicios</a>
-            <a href="#enfoque" className="hover:text-gold">Cómo trabajamos</a>
-            <a href="#contacto" className="hover:text-gold">Contacto</a>
+          <nav className="hidden items-center gap-9 font-display text-sm text-white/80 md:flex">
+            <a href="#proyectos" className="enlace-subrayado">Proyectos</a>
+            <a href="#servicios" className="enlace-subrayado">Servicios</a>
+            <a href="#proceso" className="enlace-subrayado">Cómo trabajamos</a>
           </nav>
           <a
             href={contactoHref}
-            className="rounded-full bg-gold px-4 py-2 font-display text-sm font-semibold text-ink hover:brightness-105"
+            className="boton-oro rounded-full bg-gold px-5 py-2 font-display text-sm font-semibold text-ink"
           >
             Hablemos
           </a>
@@ -101,119 +163,158 @@ export default function Home() {
         {/* Hero */}
         <section
           id="inicio"
-          className="relative overflow-hidden bg-violet-night text-white"
+          className="relative overflow-hidden bg-violet-night pt-32 text-white md:pt-40"
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-violet/40 blur-3xl"
+            className="pointer-events-none absolute -right-48 -top-48 h-[40rem] w-[40rem] rounded-full bg-violet/40 blur-3xl"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-gold/10 blur-3xl"
+            className="pointer-events-none absolute -bottom-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-gold/10 blur-3xl"
           />
 
-          <div className="relative mx-auto grid max-w-6xl gap-16 px-4 py-20 md:grid-cols-[1.1fr_0.9fr] md:items-center md:py-28">
+          <div className="relative mx-auto grid max-w-6xl items-center gap-16 px-4 pb-24 md:grid-cols-[1.1fr_0.9fr] md:pb-32">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold">
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-gold">
                 Software a medida · España y Latinoamérica
               </p>
-              <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
+              <h1 className="mt-6 font-display text-[3.25rem] font-bold leading-[1.02] tracking-tight md:text-[5.25rem]">
                 Full solutions.
                 <br />
                 <span className="text-gold">Fully coded.</span>
               </h1>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
-                Soluciones de software completas para cualquier negocio.
-                Código a medida, de la primera idea a la operación diaria, con
-                un solo equipo responsable de todo.
+              <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/75 md:text-xl">
+                Construimos aplicaciones completas para tu negocio: desde la primera
+                idea hasta la operación diaria, con un solo equipo responsable de todo.
               </p>
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <BotonPrincipal href={contactoHref}>Cuéntanos tu proyecto</BotonPrincipal>
+              <div className="mt-10 flex flex-wrap items-center gap-6">
                 <a
-                  href="#servicios"
-                  className="font-display text-base font-semibold text-white/90 underline-offset-8 hover:text-gold hover:underline"
+                  href={contactoHref}
+                  className="boton-oro rounded-full bg-gold px-8 py-4 font-display text-base font-semibold text-ink"
                 >
-                  Ver servicios
+                  Cuéntanos tu proyecto
+                </a>
+                <a
+                  href="#proyectos"
+                  className="enlace-subrayado font-display text-base font-semibold text-white/90"
+                >
+                  Ver proyectos →
                 </a>
               </div>
             </div>
 
-            {/* Tarjeta de código: el tono técnico de la marca */}
-            <div className="relative">
-              <div className="rounded-2xl border border-white/10 bg-ink/70 p-6 shadow-2xl shadow-black/40">
-                <div className="mb-4 flex gap-2">
-                  <span className="h-3 w-3 rounded-full bg-white/20" />
-                  <span className="h-3 w-3 rounded-full bg-white/20" />
-                  <span className="h-3 w-3 rounded-full bg-gold" />
-                </div>
-                <pre className="overflow-x-auto font-mono text-[0.8rem] leading-7 text-white/85 sm:text-sm">
-                  <code>
-                    <span className="text-white/40">{"// tu proyecto, de principio a fin"}</span>
-                    {"\n"}
-                    <span className="text-violet-200">const</span> negocio{" "}
-                    <span className="text-white/50">=</span>{" "}
-                    <span className="text-violet-200">await</span> fullkod.
-                    <span className="text-gold">construir</span>({"{"}
-                    {"\n  "}alcance: <span className="text-gold">&quot;completo&quot;</span>,
-                    {"\n  "}equipo: <span className="text-gold">&quot;uno&quot;</span>,
-                    {"\n  "}codigo: <span className="text-gold">&quot;a medida&quot;</span>
-                    {"\n"}
-                    {"});"}
-                    {"\n\n"}
-                    <span className="text-white/40">{"// listo para crecer"}</span>
-                    {"\n"}
-                    <span className="text-violet-200">await</span> negocio.
-                    <span className="text-gold">escalar</span>();
-                  </code>
-                </pre>
+            {/* El símbolo: el < y el > se arman al cargar y flotan */}
+            <div className="relative flex items-center justify-center">
+              <div
+                aria-hidden
+                className="anillo-giratorio absolute h-[24rem] w-[24rem] rounded-full border border-dashed border-white/15 md:h-[30rem] md:w-[30rem]"
+              />
+              <div className="simbolo-flota relative">
+                <Simbolo animado className="h-64 w-64 drop-shadow-[0_30px_60px_rgba(91,33,182,0.55)] md:h-80 md:w-80" />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Servicios */}
-        <section id="servicios" className="bg-background py-24">
-          <div className="mx-auto max-w-6xl px-4">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-violet">
-              Lo que hacemos
-            </p>
-            <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
-              Un solo equipo para toda la solución
-            </h2>
+        {/* Marquee */}
+        <div className="overflow-hidden border-y border-white/10 bg-violet-night py-6 text-white/55">
+          <div className="marquee-pista flex w-max gap-10 whitespace-nowrap font-mono text-sm uppercase tracking-[0.18em]">
+            {[...ambitos, ...ambitos].map((a, i) => (
+              <span key={i} className="flex items-center gap-10">
+                {a}
+                <Barra className="h-4 w-2 shrink-0" />
+              </span>
+            ))}
+          </div>
+        </div>
 
-            <div className="mt-14 grid gap-6 sm:grid-cols-2">
-              {servicios.map((s) => (
-                <article
-                  key={s.n}
-                  className="group rounded-2xl border border-violet/10 bg-lavender/60 p-8 transition hover:-translate-y-1 hover:border-violet/30 hover:bg-lavender"
-                >
-                  <span className="font-mono text-sm text-violet">{s.n}</span>
-                  <h3 className="mt-4 font-display text-2xl font-semibold text-ink">
-                    {s.titulo}
-                  </h3>
-                  <p className="mt-3 leading-relaxed text-slate">{s.texto}</p>
-                </article>
+        {/* Proyectos */}
+        <section id="proyectos" className="bg-cream py-28 text-ink">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="revelar">
+              <Etiqueta>Proyectos</Etiqueta>
+              <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+                Software real, en uso todos los días
+              </h2>
+            </div>
+
+            <div className="mt-16 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
+              {proyectos.map((p) => (
+                <div key={p.nombre} className="revelar">
+                  <article className="tarjeta flex h-full flex-col rounded-3xl border border-violet/10 bg-white p-6">
+                    <div
+                      className="flex items-center justify-center rounded-2xl p-6"
+                      style={{ background: p.fondo, color: p.texto_color }}
+                    >
+                      <Mockup
+                        tipo={p.tipo}
+                        acento={p.acento}
+                        fondo={p.fondo === "#FFFFFF" ? "#FDF6DD" : p.fondo}
+                        texto={p.texto_color}
+                      />
+                    </div>
+                    <h3 className="mt-7 font-display text-2xl font-semibold">{p.nombre}</h3>
+                    <p className="mt-3 flex-1 leading-relaxed text-slate">{p.texto}</p>
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {p.etiquetas.map((e) => (
+                        <li
+                          key={e}
+                          className="rounded-full bg-lavender px-3 py-1 font-mono text-xs text-violet"
+                        >
+                          {e}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Enfoque */}
-        <section id="enfoque" className="bg-violet-night py-24 text-white">
+        {/* Servicios */}
+        <section id="servicios" className="bg-violet-night py-28 text-white">
           <div className="mx-auto max-w-6xl px-4">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold">
-              Cómo trabajamos
-            </p>
-            <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-              Claro desde el primer día, sin sorpresas al final
-            </h2>
+            <div className="revelar">
+              <Etiqueta oscuro>Servicios</Etiqueta>
+              <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+                Un solo equipo para toda la solución
+              </h2>
+            </div>
 
-            <ol className="mt-14 grid gap-10 md:grid-cols-3">
+            <div className="mt-16 grid gap-6 md:grid-cols-2">
+              {servicios.map((s) => (
+                <div key={s.n} className="revelar">
+                  <article className="tarjeta group rounded-3xl border border-white/10 bg-white/[0.03] p-9 hover:bg-white/[0.06]">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-sm text-gold">{s.n}</span>
+                      <Simbolo className="h-7 w-7 opacity-0 transition duration-500 group-hover:opacity-100" />
+                    </div>
+                    <h3 className="mt-8 font-display text-2xl font-semibold">{s.titulo}</h3>
+                    <p className="mt-3 leading-relaxed text-white/70">{s.texto}</p>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Proceso */}
+        <section id="proceso" className="bg-cream py-28 text-ink">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="revelar">
+              <Etiqueta>Cómo trabajamos</Etiqueta>
+            </div>
+            <ol className="mt-16 grid gap-12 md:grid-cols-3">
               {pasos.map((p, i) => (
-                <li key={p.titulo} className="border-t border-gold/40 pt-6">
-                  <span className="font-mono text-sm text-gold">0{i + 1}</span>
-                  <h3 className="mt-3 font-display text-2xl font-semibold">{p.titulo}</h3>
-                  <p className="mt-3 leading-relaxed text-white/70">{p.texto}</p>
+                <li key={p.titulo} className="revelar">
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-sm text-violet">0{i + 1}</span>
+                    <span className="h-px flex-1 bg-gold/60" />
+                  </div>
+                  <h3 className="mt-6 font-display text-3xl font-semibold">{p.titulo}</h3>
+                  <p className="mt-4 text-lg leading-relaxed text-slate">{p.texto}</p>
                 </li>
               ))}
             </ol>
@@ -221,41 +322,48 @@ export default function Home() {
         </section>
 
         {/* Llamada a la acción */}
-        <section className="bg-cream py-24">
-          <div className="mx-auto flex max-w-6xl flex-col items-start gap-8 px-4 md:flex-row md:items-center md:justify-between">
-            <h2 className="max-w-xl font-display text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
+        <section className="relative overflow-hidden bg-violet py-32 text-center text-white">
+          <Simbolo className="pointer-events-none absolute -left-16 top-1/2 h-72 w-72 -translate-y-1/2 opacity-10" />
+          <Simbolo className="pointer-events-none absolute -right-16 top-1/2 h-72 w-72 -translate-y-1/2 opacity-10" />
+          <div className="revelar relative mx-auto max-w-3xl px-4">
+            <h2 className="font-display text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl">
               ¿Tienes un negocio que necesita software a medida?
             </h2>
-            <div className="shrink-0">
-              <a
-                href={contactoHref}
-                className="inline-flex items-center justify-center rounded-full bg-violet px-7 py-4 font-display text-base font-semibold text-white transition hover:bg-violet-night"
-              >
-                Hablemos
-              </a>
-            </div>
+            <a
+              href={contactoHref}
+              className="boton-oro mt-12 inline-block rounded-full bg-gold px-9 py-4 font-display text-lg font-semibold text-ink"
+            >
+              Hablemos
+            </a>
           </div>
         </section>
       </main>
 
       {/* Contacto y pie */}
       <footer id="contacto" className="bg-violet-night text-white">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1.2fr_1fr]">
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 md:grid-cols-[1.2fr_1fr]">
           <div>
-            <Logo className="h-9 w-auto" />
-            <p className="mt-6 max-w-sm font-display text-xl text-white/80">
+            <Image
+              src="/brand/fullkod-horizontal-white.svg"
+              alt="Fullkod"
+              width={992}
+              height={256}
+              unoptimized
+              className="h-10 w-auto"
+            />
+            <p className="mt-6 max-w-sm font-display text-2xl text-white/80">
               Full solutions. <span className="text-gold">Fully coded.</span>
             </p>
           </div>
           <div className="space-y-3 text-white/75 md:text-right">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold">Contacto</p>
+            <Etiqueta oscuro>Contacto</Etiqueta>
             {CONTACTO.email ? (
-              <a href={`mailto:${CONTACTO.email}`} className="block text-lg hover:text-gold">
+              <a href={`mailto:${CONTACTO.email}`} className="enlace-subrayado block text-lg">
                 {CONTACTO.email}
               </a>
             ) : null}
             {CONTACTO.linkedin ? (
-              <a href={CONTACTO.linkedin} className="block text-lg hover:text-gold">
+              <a href={CONTACTO.linkedin} className="enlace-subrayado block text-lg">
                 LinkedIn
               </a>
             ) : null}
@@ -265,7 +373,7 @@ export default function Home() {
         <div className="border-t border-white/10">
           <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-white/50 md:flex-row md:justify-between">
             <p>© 2026 Fullkod. Todos los derechos reservados.</p>
-            <p>Código a medida, hecho con cuidado.</p>
+            <p>Full solutions. Fully coded.</p>
           </div>
         </div>
       </footer>

@@ -43,3 +43,116 @@ body {
   background: var(--gold);
   color: var(--ink);
 }
+
+/* Entrada del símbolo: el < violeta y el > dorado se encuentran en el centro */
+@keyframes armar-izq {
+  from { transform: translate(-72px, 18px) rotate(-14deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes armar-der {
+  from { transform: translate(72px, -18px) rotate(14deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes girar-lento {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Revelado al hacer scroll, con scroll-driven animations; sin soporte, se ve sin animar */
+@keyframes revelar {
+  from { opacity: 0; transform: translateY(40px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+.revelar {
+  animation: revelar linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 35%;
+}
+
+.simbolo-izq {
+  animation: armar-izq 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.simbolo-der {
+  animation: armar-der 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both;
+}
+
+.simbolo-flota {
+  animation: flotar 7s ease-in-out 1.3s infinite;
+}
+
+.anillo-giratorio {
+  animation: girar-lento 40s linear infinite;
+}
+
+.marquee-pista {
+  animation: marquee 38s linear infinite;
+}
+
+.tarjeta {
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.5s ease,
+    border-color 0.4s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -20px rgba(36, 16, 79, 0.35);
+  border-color: rgba(91, 33, 182, 0.35);
+}
+
+.tarjeta:hover .mock-pantalla {
+  transform: scale(1.04) translateY(-4px);
+}
+
+.mock-pantalla {
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.enlace-subrayado {
+  background-image: linear-gradient(var(--gold), var(--gold));
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s ease, color 0.3s ease;
+}
+
+.enlace-subrayado:hover {
+  background-size: 100% 2px;
+  color: var(--gold);
+}
+
+.boton-oro {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.boton-oro:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -10px rgba(242, 183, 5, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .revelar { animation: none; }
+}
+
+@supports not (animation-timeline: view()) {
+  .revelar { animation: none; }
+}
