@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Barra, Simbolo } from "@/components/simbolo";
 import { Mockup } from "@/components/mockup";
 import { CONTACTO } from "@/lib/contacto";
+import { FICTICIOS, TESTIMONIOS } from "@/lib/testimonios";
 
 const proyectos = [
   {
@@ -318,6 +319,49 @@ export default function Home() {
                 </li>
               ))}
             </ol>
+          </div>
+        </section>
+
+        {/* Testimonios */}
+        <section id="clientes" className="bg-lavender py-28 text-ink">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="revelar flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <Etiqueta>Clientes</Etiqueta>
+                <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+                  Lo que dicen de trabajar con nosotros
+                </h2>
+              </div>
+              {FICTICIOS ? (
+                <span className="rounded-full border border-violet/30 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-violet">
+                  Testimonios de ejemplo
+                </span>
+              ) : null}
+            </div>
+
+            <div className="mt-16 grid gap-6 md:grid-cols-3">
+              {TESTIMONIOS.map((t) => (
+                <div key={t.nombre} className="revelar">
+                  <figure className="tarjeta flex h-full flex-col rounded-3xl border border-violet/10 bg-white p-8">
+                    <span aria-hidden="true" className="font-display text-6xl leading-none text-gold">
+                      “
+                    </span>
+                    <blockquote className="mt-2 flex-1 text-lg leading-relaxed text-ink">
+                      {t.cita}
+                    </blockquote>
+                    <figcaption className="mt-8 flex items-center gap-4 border-t border-violet/10 pt-6">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-violet font-display text-sm font-semibold text-white">
+                        {t.iniciales}
+                      </span>
+                      <span>
+                        <span className="block font-display font-semibold">{t.nombre}</span>
+                        <span className="block text-sm text-slate">{t.cargo}</span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
