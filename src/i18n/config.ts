@@ -3,6 +3,9 @@ export const LOCALES = ["es", "en"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "es";
 
+// Each language written in itself, for the language selector.
+export const LOCALE_NAMES: Record<Locale, string> = { es: "Español", en: "English" };
+
 export function hasLocale(value: string): value is Locale {
   return (LOCALES as readonly string[]).includes(value);
 }
