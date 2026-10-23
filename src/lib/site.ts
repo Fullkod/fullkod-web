@@ -1,5 +1,6 @@
 export const SITE = {
   url: "https://fullkod.com",
-  description:
-    "Soluciones de software completas para cualquier negocio, en cualquier parte del mundo. Código a medida, de la idea a la operación.",
+  name: "Fullkod",
+  slogan: "Full solutions. Fully coded.",
+  founders: ["Roberto Cabrera", "Claudia Rodríguez"],
 };

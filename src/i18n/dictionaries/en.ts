@@ -3,10 +3,10 @@ import type { Dictionary } from "@/i18n/dictionaries/es";
 
 export const en: Dictionary = {
   meta: {
-    title: "Fullkod — Full solutions. Fully coded.",
+    title: "Fullkod — Custom software for your business",
     titleTemplate: "%s · Fullkod",
     description:
-      "Complete software solutions for any business, anywhere in the world. Custom code, from the idea to day-to-day operation.",
+      "Custom web and mobile apps, SaaS, e-commerce and automation for your business. From the first idea to day-to-day operation, with a single team.",
     keywords: [
       "custom software",
       "application development",

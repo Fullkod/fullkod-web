@@ -1,5 +1,10 @@
 {
   "name": "Fullkod",
+  "short_name": "Fullkod",
+  "description": "Custom software for your business · Software a medida para tu negocio",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/icon-192.png",

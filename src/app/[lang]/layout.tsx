@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SITE } from "@/lib/site";
+import { CONTACT } from "@/lib/contact";
 import { LOCALES, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import "../globals.css";
@@ -41,6 +42,14 @@ export async function generateMetadata({ params }: Pick<Props, "params">): Promi
     description: meta.description,
     applicationName: "Fullkod",
     keywords: meta.keywords,
+    authors: SITE.founders.map((name) => ({ name })),
+    creator: "Fullkod",
+    publisher: "Fullkod",
+    formatDetection: { telephone: false, email: false, address: false },
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+      other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+    },
     alternates: {
       canonical: `/${lang}`,
       languages: { es: "/es", en: "/en", "x-default": "/es" },
@@ -78,15 +87,34 @@ export default async function RootLayout({ children, params }: Props) {
   if (!hasLocale(lang)) notFound();
   const dict = getDictionary(lang);
 
-  const organization = {
+  const sameAs = [CONTACT.linkedin].filter((url): url is string => Boolean(url));
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Fullkod",
-    url: SITE.url,
-    logo: `${SITE.url}/icon-512.png`,
-    slogan: "Full solutions. Fully coded.",
-    description: dict.meta.description,
-    areaServed: "Worldwide",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE.url}/#organization`,
+        name: SITE.name,
+        url: SITE.url,
+        logo: { "@type": "ImageObject", url: `${SITE.url}/icon-512.png`, width: 512, height: 512 },
+        image: `${SITE.url}/${lang}/opengraph-image`,
+        slogan: SITE.slogan,
+        description: dict.meta.description,
+        areaServed: "Worldwide",
+        knowsLanguage: ["es", "en"],
+        founder: SITE.founders.map((name) => ({ "@type": "Person", name })),
+        ...(CONTACT.email ? { email: CONTACT.email } : {}),
+        ...(sameAs.length > 0 ? { sameAs } : {}),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE.url}/#website`,
+        url: SITE.url,
+        name: SITE.name,
+        inLanguage: ["es", "en"],
+        publisher: { "@id": `${SITE.url}/#organization` },
+      },
+    ],
   };
 
   return (
@@ -98,7 +126,7 @@ export default async function RootLayout({ children, params }: Props) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organization).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
         <a

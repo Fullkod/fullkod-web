@@ -4,10 +4,10 @@
 
 export const es = {
   meta: {
-    title: "Fullkod — Full solutions. Fully coded.",
+    title: "Fullkod — Software a medida para tu negocio",
     titleTemplate: "%s · Fullkod",
     description:
-      "Soluciones de software completas para cualquier negocio, en cualquier parte del mundo. Código a medida, de la idea a la operación.",
+      "Aplicaciones web y móviles a medida, SaaS, e-commerce y automatización para tu negocio. De la primera idea a la operación diaria, con un solo equipo.",
     keywords: [
       "software a medida",
       "desarrollo de aplicaciones",

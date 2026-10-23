@@ -6,6 +6,7 @@ import { DesktopFrame, Gallery } from "@/components/screenshot";
 import { Mockup } from "@/components/mockup";
 import { BrandSymbol, GoldEdges } from "@/components/symbol";
 import { fmt } from "@/i18n/config";
+import { SITE } from "@/lib/site";
 import { PROJECT_SLUGS, findProject, getProjects } from "@/content/projects";
 import { LOCALES, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -45,8 +46,42 @@ export default async function CaseStudy({ params }: Props) {
   const index = projects.findIndex((x) => x.slug === p.slug);
   const next = projects[(index + 1) % projects.length];
 
+  const url = `${SITE.url}/${lang}/projects/${p.slug}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Fullkod", item: `${SITE.url}/${lang}` },
+          { "@type": "ListItem", position: 2, name: dict.header.links.projects, item: `${SITE.url}/${lang}#projects` },
+          { "@type": "ListItem", position: 3, name: p.name, item: url },
+        ],
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": `${url}#software`,
+        name: p.name,
+        description: p.summary,
+        url,
+        inLanguage: lang,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: p.platforms.join(", "),
+        applicationSuite: "Fullkod",
+        image: p.cover ? `${SITE.url}${p.cover}` : undefined,
+        screenshot: p.screenshots.map((s) => ({ "@type": "ImageObject", url: `${SITE.url}${s.src}`, caption: s.alt })),
+        author: { "@id": `${SITE.url}/#organization` },
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
+
       {/* Case header */}
       <section className="relative overflow-hidden bg-violet-night pt-32 text-white md:pt-40">
         <div
