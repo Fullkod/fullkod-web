@@ -3,6 +3,10 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import type { Screenshot } from "@/content/projects";
+import { fmt } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries";
+
+type Labels = Dictionary["gallery"];
 
 // Real app screenshot inside a browser frame (desktop) or a phone frame (mobile).
 // Clicking a screenshot enlarges it over the page; it closes with the X, with Escape or by clicking outside.
@@ -44,7 +48,9 @@ function Lightbox({
   index,
   onChange,
   onClose,
+  labels,
 }: {
+  labels: Labels;
   screenshots: Screenshot[];
   index: number;
   onChange: (i: number) => void;
@@ -90,7 +96,7 @@ function Lightbox({
       <button
         type="button"
         onClick={onClose}
-        aria-label="Cerrar"
+        aria-label={labels.close}
         className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-2xl leading-none text-white transition hover:bg-white/30"
       >
         ×
@@ -99,7 +105,7 @@ function Lightbox({
         <>
           <button
             type="button"
-            aria-label="Anterior"
+            aria-label={labels.previous}
             className={`${sideButton} left-3`}
             onClick={(e) => {
               e.stopPropagation();
@@ -110,7 +116,7 @@ function Lightbox({
           </button>
           <button
             type="button"
-            aria-label="Siguiente"
+            aria-label={labels.next}
             className={`${sideButton} right-3`}
             onClick={(e) => {
               e.stopPropagation();
@@ -137,7 +143,7 @@ function Lightbox({
   );
 }
 
-export function Gallery({ screenshots }: { screenshots: Screenshot[] }) {
+export function Gallery({ screenshots, labels }: { screenshots: Screenshot[]; labels: Labels }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const desktop = screenshots.filter((c) => c.kind === "desktop");
   const mobile = screenshots.filter((c) => c.kind === "mobile");
@@ -152,7 +158,7 @@ export function Gallery({ screenshots }: { screenshots: Screenshot[] }) {
               <button
                 type="button"
                 onClick={() => setOpenIndex(all.indexOf(c))}
-                aria-label={`Ampliar: ${c.alt}`}
+                aria-label={fmt(labels.enlarge, { alt: c.alt })}
                 className="block w-full cursor-zoom-in text-left transition hover:-translate-y-1"
               >
                 <DesktopFrame src={c.src} alt={c.alt} />
@@ -166,14 +172,14 @@ export function Gallery({ screenshots }: { screenshots: Screenshot[] }) {
       ) : null}
       {mobile.length > 0 ? (
         <div>
-          <p className="mb-8 font-mono text-xs uppercase tracking-[0.22em] text-gold">En el móvil</p>
+          <p className="mb-8 font-mono text-xs uppercase tracking-[0.22em] text-gold">{labels.mobileHeading}</p>
           <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
             {mobile.map((c) => (
               <figure key={c.src}>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(all.indexOf(c))}
-                  aria-label={`Ampliar: ${c.alt}`}
+                  aria-label={fmt(labels.enlarge, { alt: c.alt })}
                   className="block w-full cursor-zoom-in transition hover:-translate-y-1"
                 >
                   <MobileFrame src={c.src} alt={c.alt} />
@@ -187,7 +193,7 @@ export function Gallery({ screenshots }: { screenshots: Screenshot[] }) {
         </div>
       ) : null}
       {openIndex !== null ? (
-        <Lightbox screenshots={all} index={openIndex} onChange={setOpenIndex} onClose={() => setOpenIndex(null)} />
+        <Lightbox labels={labels} screenshots={all} index={openIndex} onChange={setOpenIndex} onClose={() => setOpenIndex(null)} />
       ) : null}
     </div>
   );

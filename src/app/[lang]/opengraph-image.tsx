@@ -1,11 +1,15 @@
 import { ImageResponse } from "next/og";
+import { DEFAULT_LOCALE, hasLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 // Image shown when the link is shared (WhatsApp, LinkedIn, X...).
 export const alt = "Fullkod — Full solutions. Fully coded.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const { meta } = getDictionary(hasLocale(lang) ? lang : DEFAULT_LOCALE);
   return new ImageResponse(
     (
       <div
@@ -22,14 +26,14 @@ export default function Image() {
       >
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 640 }}>
           <div style={{ fontSize: 30, letterSpacing: 6, color: "#F2B705", textTransform: "uppercase" }}>
-            Software a medida
+            {meta.ogEyebrow}
           </div>
           <div style={{ display: "flex", flexDirection: "column", marginTop: 28, fontSize: 84, fontWeight: 700, lineHeight: 1.05 }}>
             <span>Full solutions.</span>
             <span style={{ color: "#F2B705" }}>Fully coded.</span>
           </div>
           <div style={{ marginTop: 36, fontSize: 30, color: "rgba(255,255,255,0.75)" }}>
-            fullkod.com · Para negocios de todo el mundo
+            {meta.ogLine}
           </div>
         </div>
         <svg width="340" height="340" viewBox="0 0 256 256">

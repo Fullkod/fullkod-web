@@ -1,6 +1,6 @@
 # fullkod-web
 
-**Fullkod** website (fullkod.com): corporate page, case studies and legal pages. Next.js 16 (App Router), TypeScript and Tailwind CSS v4. The site copy is in Spanish; code, identifiers, comments and routes are in English.
+**Fullkod** website (fullkod.com): corporate page, case studies and legal pages. Next.js 16 (App Router), TypeScript and Tailwind CSS v4. The site is bilingual (Spanish and English); code, identifiers, comments and routes are in English.
 
 ## Development
 
@@ -11,22 +11,29 @@ npm run build      # production build
 npm run lint
 ```
 
+## Languages
+
+Spanish (default) and English, with locale-prefixed routes (`/es`, `/en`). `src/proxy.ts` redirects `/` and any path without a locale to the visitor's language (Accept-Language; unknown languages get English). The language toggle is in the header and links to the same page in the other language.
+
 ## Where each thing is edited
 
 | What | File |
 |---|---|
-| Projects and case studies (`/projects/<slug>`) | `src/content/projects.ts` |
-| Services, process, team, technologies and FAQ | `src/content/home.ts` |
-| Testimonials | `src/lib/testimonials.ts` |
+| UI and home copy (services, process, FAQ, testimonials text, forms, 404...) | `src/i18n/dictionaries/es.ts` and `en.ts` (same shape, enforced by types) |
+| Projects: slug, images, colors, technologies | `src/content/projects.es.ts` |
+| Projects: English text | `src/content/projects.en.ts` (merged over the Spanish data by `projects.ts`) |
+| Team and technologies (language-neutral) | `src/content/home.ts` |
+| Testimonial people (names, initials) | `src/lib/testimonials.ts` |
 | Email, WhatsApp and LinkedIn | `src/lib/contact.ts` |
 | Owner data for the legal notice and privacy policy (`DRAFT = true`) | `src/lib/legal.ts` |
-| Site URL and description (SEO) | `src/lib/site.ts` |
+| Legal page bodies (ES and EN) | `src/content/legal/` |
+| Site URL (SEO) | `src/lib/site.ts` |
 
-Fields set to `null` are not shown (or render as "[pendiente]" on the legal pages). Before publishing: owner data, team roles and contact details.
+To add a language: add it to `LOCALES` in `src/i18n/config.ts`, create its dictionary and project copy, and add its branch in the `src/content/legal/` bodies. Fields set to `null` are not shown (or render as a "pending" placeholder on the legal pages).
 
 ## Routes
 
-`/` · `/projects/<slug>` · `/legal-notice` · `/privacy` · `/cookies` · `/api/contact`. Home anchors: `#projects`, `#services`, `#process`, `#team`, `#clients`, `#faq`, `#contact`.
+`/<lang>` · `/<lang>/projects/<slug>` · `/<lang>/legal-notice` · `/<lang>/privacy` · `/<lang>/cookies` · `/api/contact`. Home anchors: `#projects`, `#services`, `#process`, `#team`, `#clients`, `#faq`, `#contact`.
 
 ## Contact form
 
@@ -41,7 +48,7 @@ Fields set to `null` are not shown (or render as "[pendiente]" on the legal page
 
 ## SEO
 
-Metadata and Open Graph in `src/app/layout.tsx`, share image in `src/app/opengraph-image.tsx`, `sitemap.ts`, `robots.ts` and structured data (Organization and FAQPage). Visit stats with Vercel Web Analytics, cookieless.
+Metadata and Open Graph in `src/app/[lang]/layout.tsx` (with `hreflang` alternates), share image in `src/app/[lang]/opengraph-image.tsx`, `sitemap.ts` (one entry per page and language), `robots.ts` and structured data (Organization and FAQPage). Visit stats with Vercel Web Analytics, cookieless.
 
 ## Deployment
 

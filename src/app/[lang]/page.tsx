@@ -4,28 +4,30 @@ import { Eyebrow } from "@/components/eyebrow";
 import { ContactForm } from "@/components/contact-form";
 import { DesktopFrame } from "@/components/screenshot";
 import { Mockup } from "@/components/mockup";
-import { PROJECTS } from "@/content/projects";
-import {
-  FAQ,
-  SECTORS,
-  SERVICES,
-  STEPS,
-  TEAM,
-  TECHNOLOGIES,
-} from "@/content/home";
+import { notFound } from "next/navigation";
+import { getProjects } from "@/content/projects";
+import { TEAM, TECHNOLOGIES } from "@/content/home";
 import { TESTIMONIALS } from "@/lib/testimonials";
+import { fmt, hasLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ.map((q) => ({
-    "@type": "Question",
-    name: q.question,
-    acceptedAnswer: { "@type": "Answer", text: q.answer },
-  })),
-};
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = getDictionary(lang);
+  const t = dict.home;
+  const projects = getProjects(lang);
 
-export default function Home() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: t.faq.items.map((q) => ({
+      "@type": "Question",
+      name: q.question,
+      acceptedAnswer: { "@type": "Answer", text: q.answer },
+    })),
+  };
+
   return (
     <>
       <script
@@ -52,30 +54,28 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-6xl items-center gap-16 px-4 pb-24 md:grid-cols-[1.1fr_0.9fr] md:pb-32">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-gold">
-              Software a medida · Para todo el mundo
+              {t.hero.eyebrow}
             </p>
             <h1 className="mt-6 font-display text-[3.25rem] font-bold leading-[1.02] tracking-tight md:text-[5.25rem]">
-              Full solutions.
+              {t.hero.line1}
               <br />
-              <span className="text-gold">Fully coded.</span>
+              <span className="text-gold">{t.hero.line2}</span>
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/75 md:text-xl">
-              Construimos aplicaciones completas para tu negocio: desde la
-              primera idea hasta la operación diaria, con un solo equipo
-              responsable de todo.
+              {t.hero.text}
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <Link
                 href="#contact"
                 className="gold-button rounded-full bg-gold px-8 py-4 font-display text-base font-semibold text-ink"
               >
-                Cuéntanos tu proyecto
+                {t.hero.ctaPrimary}
               </Link>
               <Link
                 href="#projects"
                 className="underline-link font-display text-base font-semibold text-white/90"
               >
-                Ver proyectos →
+                {t.hero.ctaSecondary}
               </Link>
             </div>
           </div>
@@ -99,11 +99,11 @@ export default function Home() {
       {/* Marquee */}
       <div className="overflow-hidden border-y border-white/10 bg-violet-night py-6 text-white/55">
         <div className="marquee-track flex w-max gap-10 whitespace-nowrap font-mono text-sm uppercase tracking-[0.18em]">
-          {[...SECTORS, ...SECTORS].map((a, i) => (
+          {[...t.sectors, ...t.sectors].map((a, i) => (
             <span
               key={i}
               className="flex items-center gap-10"
-              aria-hidden={i >= SECTORS.length}
+              aria-hidden={i >= t.sectors.length}
             >
               {a}
               <Slash className="h-4 w-2 shrink-0" />
@@ -116,19 +116,19 @@ export default function Home() {
       <section id="projects" className="scroll-mt-16 bg-cream py-28 text-ink">
         <div className="mx-auto max-w-6xl px-4">
           <div className="reveal">
-            <Eyebrow>Proyectos</Eyebrow>
+            <Eyebrow>{t.projects.eyebrow}</Eyebrow>
             <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-              Software real, en uso todos los días
+              {t.projects.title}
             </h2>
           </div>
 
           <div className="mt-16 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-            {PROJECTS.map((p, i) => {
+            {projects.map((p, i) => {
               // With 7, 10... projects the last row would be short on desktop: the last one spans two columns.
               const wide =
                 i === 0 ||
-                (i === PROJECTS.length - 1 &&
-                  (PROJECTS.length + 1) % 3 === 2);
+                (i === projects.length - 1 &&
+                  (projects.length + 1) % 3 === 2);
               return (
                 // The first one is featured at double width.
                 <div
@@ -136,7 +136,7 @@ export default function Home() {
                   className={`reveal ${i === 0 ? "md:col-span-2" : wide ? "xl:col-span-2" : ""}`}
                 >
                   <Link
-                    href={`/projects/${p.slug}`}
+                    href={`/${lang}/projects/${p.slug}`}
                     className={`card group flex h-full flex-col rounded-3xl border border-violet/10 bg-white p-6 ${
                       wide
                         ? "xl:grid xl:grid-cols-[1.15fr_1fr] xl:gap-x-10"
@@ -154,7 +154,7 @@ export default function Home() {
                         <div className="w-full">
                           <DesktopFrame
                             src={p.cover}
-                            alt={`Pantalla de ${p.name}`}
+                            alt={fmt(t.projects.screenOf, { name: p.name })}
                           />
                         </div>
                       ) : (
@@ -186,7 +186,7 @@ export default function Home() {
                         ))}
                       </ul>
                       <span className="mt-6 font-display text-sm font-semibold text-violet transition group-hover:translate-x-1">
-                        Ver caso →
+                        {t.projects.viewCase}
                       </span>
                     </div>
                   </Link>
@@ -205,18 +205,18 @@ export default function Home() {
         <GoldEdges />
         <div className="relative mx-auto max-w-6xl px-4">
           <div className="reveal">
-            <Eyebrow dark>Servicios</Eyebrow>
+            <Eyebrow dark>{t.services.eyebrow}</Eyebrow>
             <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-              Un solo equipo para toda la solución
+              {t.services.title}
             </h2>
           </div>
 
           <div className="mt-16 grid gap-6 md:grid-cols-2">
-            {SERVICES.map((s) => (
-              <div key={s.number} className="reveal">
+            {t.services.items.map((s, i) => (
+              <div key={s.title} className="reveal">
                 <article className="card group h-full rounded-3xl border border-white/10 bg-white/[0.03] p-9 hover:bg-white/[0.06]">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-sm text-gold">{s.number}</span>
+                    <span className="font-mono text-sm text-gold">{String(i + 1).padStart(2, "0")}</span>
                     <BrandSymbol className="h-7 w-7 opacity-0 transition duration-500 group-hover:opacity-100" />
                   </div>
                   <h3 className="mt-8 font-display text-2xl font-semibold">
@@ -233,7 +233,7 @@ export default function Home() {
           {/* Technologies */}
           <div className="reveal mt-20 border-t border-white/10 pt-10">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/50">
-              Con qué trabajamos
+              {t.services.stackTitle}
             </p>
             <ul className="mt-6 flex flex-wrap gap-3">
               {TECHNOLOGIES.map((t) => (
@@ -253,13 +253,13 @@ export default function Home() {
       <section id="process" className="scroll-mt-16 bg-cream py-28 text-ink">
         <div className="mx-auto max-w-6xl px-4">
           <div className="reveal">
-            <Eyebrow>Cómo trabajamos</Eyebrow>
+            <Eyebrow>{t.process.eyebrow}</Eyebrow>
             <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-              Claro desde el primer día
+              {t.process.title}
             </h2>
           </div>
           <ol className="mt-16 grid gap-12 md:grid-cols-3">
-            {STEPS.map((p, i) => (
+            {t.process.steps.map((p, i) => (
               <li key={p.title} className="reveal">
                 <div className="flex items-center gap-4">
                   <span className="font-mono text-sm text-violet">
@@ -283,14 +283,12 @@ export default function Home() {
       <section id="team" className="scroll-mt-16 bg-white py-28 text-ink">
         <div className="mx-auto grid max-w-6xl gap-16 px-4 md:grid-cols-[1fr_1.1fr] md:items-center">
           <div className="reveal">
-            <Eyebrow>Quiénes somos</Eyebrow>
+            <Eyebrow>{t.team.eyebrow}</Eyebrow>
             <h2 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">
-              Un equipo pequeño que responde por todo
+              {t.team.title}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate">
-              En Fullkod hacemos software completo para cualquier negocio, esté
-              donde esté. Hablas siempre con quien construye tu
-              proyecto: sin intermediarios y sin pasar la pelota.
+              {t.team.text}
             </p>
           </div>
 
@@ -325,16 +323,22 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="reveal flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <Eyebrow>Clientes</Eyebrow>
+              <Eyebrow>{t.clients.eyebrow}</Eyebrow>
               <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-                Lo que dicen quienes ya usan nuestras apps
+                {t.clients.title}
               </h2>
             </div>
           </div>
 
-          <div className="mt-16 grid gap-6 md:mx-auto md:max-w-4xl md:grid-cols-2">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="reveal">
+          {t.clients.translatedNote ? (
+            <p className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-slate">
+              {t.clients.translatedNote}
+            </p>
+          ) : null}
+
+          <div className="mt-10 grid gap-6 md:mx-auto md:max-w-4xl md:grid-cols-2">
+            {TESTIMONIALS.map((person, i) => (
+              <div key={person.name} className="reveal">
                 <figure className="card flex h-full flex-col rounded-3xl border border-violet/10 bg-white p-8">
                   <span
                     aria-hidden="true"
@@ -343,18 +347,18 @@ export default function Home() {
                     “
                   </span>
                   <blockquote className="mt-2 flex-1 text-lg leading-relaxed text-ink">
-                    {t.quote}
+                    {t.clients.testimonials[i].quote}
                   </blockquote>
                   <figcaption className="mt-8 flex items-center gap-4 border-t border-violet/10 pt-6">
                     <span className="flex h-11 w-11 items-center justify-center rounded-full bg-violet font-display text-sm font-semibold text-white">
-                      {t.initials}
+                      {person.initials}
                     </span>
                     <span>
                       <span className="block font-display font-semibold">
-                        {t.name}
+                        {person.name}
                       </span>
                       <span className="block text-sm text-slate">
-                        {t.role}
+                        {t.clients.testimonials[i].role}
                       </span>
                     </span>
                   </figcaption>
@@ -369,24 +373,24 @@ export default function Home() {
       <section id="faq" className="scroll-mt-16 bg-cream py-28 text-ink">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-[0.8fr_1.2fr]">
           <div className="reveal">
-            <Eyebrow>Preguntas frecuentes</Eyebrow>
+            <Eyebrow>{t.faq.eyebrow}</Eyebrow>
             <h2 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">
-              Lo que suelen preguntarnos
+              {t.faq.title}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate">
-              ¿No está tu duda?{" "}
+              {t.faq.noAnswer}{" "}
               <Link
                 href="#contact"
                 className="font-semibold text-violet underline underline-offset-4"
               >
-                Escríbenos
+                {t.faq.writeUs}
               </Link>
               .
             </p>
           </div>
 
           <div className="divide-y divide-violet/15 border-y border-violet/15">
-            {FAQ.map((q) => (
+            {t.faq.items.map((q) => (
               <details key={q.question} className="faq group">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 font-display text-xl font-semibold">
                   {q.question}
@@ -414,17 +418,16 @@ export default function Home() {
         <GoldEdges />
         <div className="relative mx-auto grid max-w-6xl gap-14 px-4 md:grid-cols-[0.9fr_1.1fr]">
           <div className="reveal">
-            <Eyebrow dark>Contacto</Eyebrow>
+            <Eyebrow dark>{t.contact.eyebrow}</Eyebrow>
             <h2 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl">
-              ¿Tienes un negocio que necesita software a medida?
+              {t.contact.title}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-white/80">
-              Cuéntanos qué quieres resolver. Te respondemos con preguntas
-              concretas y, si encaja, con una propuesta por escrito.
+              {t.contact.text}
             </p>
           </div>
           <div className="reveal">
-            <ContactForm />
+            <ContactForm lang={lang} dict={dict.form} />
           </div>
         </div>
       </section>
