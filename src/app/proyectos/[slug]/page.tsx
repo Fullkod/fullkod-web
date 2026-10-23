@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Etiqueta } from "@/components/etiqueta";
+import { Galeria, MarcoEscritorio } from "@/components/captura";
 import { Mockup } from "@/components/mockup";
 import { Simbolo } from "@/components/simbolo";
 import { PROYECTOS, buscarProyecto } from "@/content/proyectos";
@@ -70,7 +71,11 @@ export default async function CasoDeEstudio({ params }: Props) {
             style={{ background: p.mockup.fondo, color: p.mockup.texto }}
           >
             <div className="w-full max-w-sm">
-              <Mockup {...p.mockup} />
+              {p.portada ? (
+                <MarcoEscritorio src={p.portada} alt={`Pantalla de ${p.nombre}`} prioridad />
+              ) : (
+                <Mockup {...p.mockup} />
+              )}
             </div>
           </div>
         </div>
@@ -96,6 +101,17 @@ export default async function CasoDeEstudio({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {p.capturas.length > 0 ? (
+        <section className="bg-violet-night py-24 text-white">
+          <div className="mx-auto max-w-6xl px-4">
+            <Etiqueta>Así se ve</Etiqueta>
+            <div className="mt-10">
+              <Galeria capturas={p.capturas} />
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {p.resultado ? (
         <section className="bg-white py-24 text-ink">

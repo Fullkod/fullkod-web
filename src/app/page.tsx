@@ -2,9 +2,17 @@ import Link from "next/link";
 import { Barra, Simbolo } from "@/components/simbolo";
 import { Etiqueta } from "@/components/etiqueta";
 import { FormularioContacto } from "@/components/formulario-contacto";
+import { MarcoEscritorio } from "@/components/captura";
 import { Mockup } from "@/components/mockup";
 import { PROYECTOS } from "@/content/proyectos";
-import { AMBITOS, EQUIPO, PASOS, PREGUNTAS, SERVICIOS, TECNOLOGIAS } from "@/content/sitio";
+import {
+  AMBITOS,
+  EQUIPO,
+  PASOS,
+  PREGUNTAS,
+  SERVICIOS,
+  TECNOLOGIAS,
+} from "@/content/sitio";
 import { FICTICIOS, TESTIMONIOS } from "@/lib/testimonios";
 
 const faqJsonLd = {
@@ -22,7 +30,9 @@ export default function Home() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+        }}
       />
 
       {/* Hero */}
@@ -50,8 +60,9 @@ export default function Home() {
               <span className="text-gold">Fully coded.</span>
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/75 md:text-xl">
-              Construimos aplicaciones completas para tu negocio: desde la primera
-              idea hasta la operación diaria, con un solo equipo responsable de todo.
+              Construimos aplicaciones completas para tu negocio: desde la
+              primera idea hasta la operación diaria, con un solo equipo
+              responsable de todo.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <Link
@@ -76,7 +87,10 @@ export default function Home() {
               className="anillo-giratorio absolute h-[22rem] w-[22rem] rounded-full border border-dashed border-white/15 md:h-[30rem] md:w-[30rem]"
             />
             <div className="simbolo-flota relative">
-              <Simbolo animado className="h-60 w-60 drop-shadow-[0_30px_60px_rgba(91,33,182,0.55)] md:h-80 md:w-80" />
+              <Simbolo
+                animado
+                className="h-60 w-60 drop-shadow-[0_30px_60px_rgba(91,33,182,0.55)] md:h-80 md:w-80"
+              />
             </div>
           </div>
         </div>
@@ -86,7 +100,11 @@ export default function Home() {
       <div className="overflow-hidden border-y border-white/10 bg-violet-night py-6 text-white/55">
         <div className="marquee-pista flex w-max gap-10 whitespace-nowrap font-mono text-sm uppercase tracking-[0.18em]">
           {[...AMBITOS, ...AMBITOS].map((a, i) => (
-            <span key={i} className="flex items-center gap-10" aria-hidden={i >= AMBITOS.length}>
+            <span
+              key={i}
+              className="flex items-center gap-10"
+              aria-hidden={i >= AMBITOS.length}
+            >
               {a}
               <Barra className="h-4 w-2 shrink-0" />
             </span>
@@ -105,54 +123,85 @@ export default function Home() {
           </div>
 
           <div className="mt-16 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-            {PROYECTOS.map((p, i) => (
-              // El primero va destacado a doble ancho: con cinco proyectos la rejilla queda completa.
-              <div key={p.slug} className={`revelar ${i === 0 ? "md:col-span-2" : ""}`}>
-                <Link
-                  href={`/proyectos/${p.slug}`}
-                  className={`tarjeta group flex h-full flex-col rounded-3xl border border-violet/10 bg-white p-6 ${
-                    i === 0 ? "xl:grid xl:grid-cols-[1.15fr_1fr] xl:gap-x-10" : ""
-                  }`}
+            {PROYECTOS.map((p, i) => {
+              // Con 7, 10... proyectos la última fila quedaría coja en escritorio: el último ocupa dos columnas.
+              const ancho =
+                i === 0 ||
+                (i === PROYECTOS.length - 1 &&
+                  (PROYECTOS.length + 1) % 3 === 2);
+              return (
+                // El primero va destacado a doble ancho.
+                <div
+                  key={p.slug}
+                  className={`revelar ${i === 0 ? "md:col-span-2" : ancho ? "xl:col-span-2" : ""}`}
                 >
-                  <div
-                    className={`flex items-center justify-center rounded-2xl p-6 ${i === 0 ? "xl:p-10" : ""}`}
-                    style={{ background: p.mockup.fondo, color: p.mockup.texto }}
+                  <Link
+                    href={`/proyectos/${p.slug}`}
+                    className={`tarjeta group flex h-full flex-col rounded-3xl border border-violet/10 bg-white p-6 ${
+                      ancho
+                        ? "xl:grid xl:grid-cols-[1.15fr_1fr] xl:gap-x-10"
+                        : ""
+                    }`}
                   >
-                    <Mockup {...p.mockup} />
-                  </div>
-                  <div className="flex flex-1 flex-col xl:justify-center">
-                    <div className="mt-7 flex items-baseline justify-between gap-4">
-                      <h3 className="font-display text-2xl font-semibold">{p.nombre}</h3>
-                      <span className="font-mono text-xs uppercase tracking-[0.15em] text-slate">
-                        {p.sector}
+                    <div
+                      className={`flex items-center justify-center rounded-2xl p-4 ${ancho ? "xl:p-6" : ""}`}
+                      style={{
+                        background: p.mockup.fondo,
+                        color: p.mockup.texto,
+                      }}
+                    >
+                      {p.portada ? (
+                        <div className="w-full">
+                          <MarcoEscritorio
+                            src={p.portada}
+                            alt={`Pantalla de ${p.nombre}`}
+                          />
+                        </div>
+                      ) : (
+                        <Mockup {...p.mockup} />
+                      )}
+                    </div>
+                    <div className="flex flex-1 flex-col xl:justify-center">
+                      <div className="mt-7 flex items-baseline justify-between gap-4">
+                        <h3 className="font-display text-2xl font-semibold">
+                          {p.nombre}
+                        </h3>
+                        <span className="font-mono text-xs uppercase tracking-[0.15em] text-slate">
+                          {p.sector}
+                        </span>
+                      </div>
+                      <p
+                        className={`mt-3 leading-relaxed text-slate ${ancho ? "xl:text-lg" : "flex-1"}`}
+                      >
+                        {p.resumen}
+                      </p>
+                      <ul className="mt-5 flex flex-wrap items-start gap-2">
+                        {p.etiquetas.map((e) => (
+                          <li
+                            key={e}
+                            className="rounded-full bg-lavender px-3 py-1 font-mono text-xs text-violet"
+                          >
+                            {e}
+                          </li>
+                        ))}
+                      </ul>
+                      <span className="mt-6 font-display text-sm font-semibold text-violet transition group-hover:translate-x-1">
+                        Ver caso →
                       </span>
                     </div>
-                    <p className={`mt-3 leading-relaxed text-slate ${i === 0 ? "xl:text-lg" : "flex-1"}`}>
-                      {p.resumen}
-                    </p>
-                    <ul className="mt-5 flex flex-wrap items-start gap-2">
-                      {p.etiquetas.map((e) => (
-                        <li
-                          key={e}
-                          className="rounded-full bg-lavender px-3 py-1 font-mono text-xs text-violet"
-                        >
-                          {e}
-                        </li>
-                      ))}
-                    </ul>
-                    <span className="mt-6 font-display text-sm font-semibold text-violet transition group-hover:translate-x-1">
-                      Ver caso →
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            ))}
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Servicios */}
-      <section id="servicios" className="scroll-mt-16 bg-violet-night py-28 text-white">
+      <section
+        id="servicios"
+        className="scroll-mt-16 bg-violet-night py-28 text-white"
+      >
         <div className="mx-auto max-w-6xl px-4">
           <div className="revelar">
             <Etiqueta oscuro>Servicios</Etiqueta>
@@ -169,8 +218,12 @@ export default function Home() {
                     <span className="font-mono text-sm text-gold">{s.n}</span>
                     <Simbolo className="h-7 w-7 opacity-0 transition duration-500 group-hover:opacity-100" />
                   </div>
-                  <h3 className="mt-8 font-display text-2xl font-semibold">{s.titulo}</h3>
-                  <p className="mt-3 leading-relaxed text-white/70">{s.texto}</p>
+                  <h3 className="mt-8 font-display text-2xl font-semibold">
+                    {s.titulo}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-white/70">
+                    {s.texto}
+                  </p>
                 </article>
               </div>
             ))}
@@ -208,11 +261,17 @@ export default function Home() {
             {PASOS.map((p, i) => (
               <li key={p.titulo} className="revelar">
                 <div className="flex items-center gap-4">
-                  <span className="font-mono text-sm text-violet">0{i + 1}</span>
+                  <span className="font-mono text-sm text-violet">
+                    0{i + 1}
+                  </span>
                   <span className="h-px flex-1 bg-gold/60" />
                 </div>
-                <h3 className="mt-6 font-display text-3xl font-semibold">{p.titulo}</h3>
-                <p className="mt-4 text-lg leading-relaxed text-slate">{p.texto}</p>
+                <h3 className="mt-6 font-display text-3xl font-semibold">
+                  {p.titulo}
+                </h3>
+                <p className="mt-4 text-lg leading-relaxed text-slate">
+                  {p.texto}
+                </p>
               </li>
             ))}
           </ol>
@@ -228,9 +287,9 @@ export default function Home() {
               Un equipo pequeño que responde por todo
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate">
-              En Fullkod hacemos software completo para cualquier negocio, de España a
-              Latinoamérica. Hablas siempre con quien construye tu proyecto: sin
-              intermediarios y sin pasar la pelota.
+              En Fullkod hacemos software completo para cualquier negocio, de
+              España a Latinoamérica. Hablas siempre con quien construye tu
+              proyecto: sin intermediarios y sin pasar la pelota.
             </p>
           </div>
 
@@ -244,8 +303,12 @@ export default function Home() {
                     </span>
                     <Simbolo className="absolute -bottom-1 -right-1 h-9 w-9 rounded-full bg-white p-1.5" />
                   </div>
-                  <p className="mt-6 font-display text-xl font-semibold">{m.nombre}</p>
-                  {m.rol ? <p className="mt-1 text-sm text-slate">{m.rol}</p> : null}
+                  <p className="mt-6 font-display text-xl font-semibold">
+                    {m.nombre}
+                  </p>
+                  {m.rol ? (
+                    <p className="mt-1 text-sm text-slate">{m.rol}</p>
+                  ) : null}
                 </div>
               </li>
             ))}
@@ -254,7 +317,10 @@ export default function Home() {
       </section>
 
       {/* Testimonios */}
-      <section id="clientes" className="scroll-mt-16 bg-lavender py-28 text-ink">
+      <section
+        id="clientes"
+        className="scroll-mt-16 bg-lavender py-28 text-ink"
+      >
         <div className="mx-auto max-w-6xl px-4">
           <div className="revelar flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -274,7 +340,10 @@ export default function Home() {
             {TESTIMONIOS.map((t) => (
               <div key={t.nombre} className="revelar">
                 <figure className="tarjeta flex h-full flex-col rounded-3xl border border-violet/10 bg-white p-8">
-                  <span aria-hidden="true" className="font-display text-6xl leading-none text-gold">
+                  <span
+                    aria-hidden="true"
+                    className="font-display text-6xl leading-none text-gold"
+                  >
                     “
                   </span>
                   <blockquote className="mt-2 flex-1 text-lg leading-relaxed text-ink">
@@ -285,8 +354,12 @@ export default function Home() {
                       {t.iniciales}
                     </span>
                     <span>
-                      <span className="block font-display font-semibold">{t.nombre}</span>
-                      <span className="block text-sm text-slate">{t.cargo}</span>
+                      <span className="block font-display font-semibold">
+                        {t.nombre}
+                      </span>
+                      <span className="block text-sm text-slate">
+                        {t.cargo}
+                      </span>
                     </span>
                   </figcaption>
                 </figure>
@@ -306,7 +379,10 @@ export default function Home() {
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate">
               ¿No está tu duda?{" "}
-              <Link href="#contacto" className="font-semibold text-violet underline underline-offset-4">
+              <Link
+                href="#contacto"
+                className="font-semibold text-violet underline underline-offset-4"
+              >
                 Escríbenos
               </Link>
               .
@@ -335,7 +411,10 @@ export default function Home() {
       </section>
 
       {/* Contacto */}
-      <section id="contacto" className="relative scroll-mt-16 overflow-hidden bg-violet py-28 text-white">
+      <section
+        id="contacto"
+        className="relative scroll-mt-16 overflow-hidden bg-violet py-28 text-white"
+      >
         <Simbolo className="pointer-events-none absolute -left-20 top-24 h-72 w-72 opacity-10" />
         <Simbolo className="pointer-events-none absolute -bottom-16 -right-16 h-80 w-80 opacity-10" />
         <div className="relative mx-auto grid max-w-6xl gap-14 px-4 md:grid-cols-[0.9fr_1.1fr]">
@@ -345,8 +424,8 @@ export default function Home() {
               ¿Tienes un negocio que necesita software a medida?
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-white/80">
-              Cuéntanos qué quieres resolver. Te respondemos con preguntas concretas y,
-              si encaja, con una propuesta por escrito.
+              Cuéntanos qué quieres resolver. Te respondemos con preguntas
+              concretas y, si encaja, con una propuesta por escrito.
             </p>
           </div>
           <div className="revelar">

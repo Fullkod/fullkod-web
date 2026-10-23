@@ -1,7 +1,25 @@
 // Proyectos que muestra la web y sus casos de estudio.
 // Los textos salen de los README de cada repo. `resultado` queda en null hasta tener datos reales
 // (clientes, uso, cifras): la página del caso solo muestra esa sección cuando hay contenido.
-// Las capturas reales sustituirán a los bocetos (`Mockup`) cuando estén.
+// `capturas` son pantallas reales (public/sites, con nombres y datos sensibles difuminados); `portada` es la que
+// sustituye al boceto (`Mockup`) en la tarjeta y en la cabecera del caso. Sin capturas se usa el boceto.
+
+export type Captura = {
+  src: string;
+  alt: string;
+  tipo: "escritorio" | "movil";
+};
+
+type Pantalla = [archivo: string, descripcion: string];
+
+// Construye la lista de capturas a partir de los nombres de archivo (`<prefijo>-<pantalla>.png`;
+// la versión móvil lleva el sufijo `-movil`).
+function capturas(prefijo: string, escritorio: Pantalla[], movil: Pantalla[] = []): Captura[] {
+  return [
+    ...escritorio.map(([f, alt]) => ({ src: `/sites/${prefijo}-${f}.png`, alt, tipo: "escritorio" as const })),
+    ...movil.map(([f, alt]) => ({ src: `/sites/${prefijo}-${f}-movil.png`, alt, tipo: "movil" as const })),
+  ];
+}
 
 export type Proyecto = {
   slug: string;
@@ -15,6 +33,8 @@ export type Proyecto = {
   solucion: string[];
   resultado: string | null;
   tecnologias: string[];
+  portada: string | null;
+  capturas: Captura[];
   mockup: {
     tipo: "panel" | "movil";
     acento: string;
@@ -43,6 +63,25 @@ export const PROYECTOS: Proyecto[] = [
     ],
     resultado: null,
     tecnologias: ["Next.js", "Supabase", "Vercel"],
+    portada: "/sites/lensspace-panel.png",
+    capturas: capturas(
+      "lensspace",
+      [
+        ["panel", "Panel principal con el resumen del día"],
+        ["pedidos", "Pedidos y cobros"],
+        ["clientes", "Fichas de clientes"],
+        ["recetas", "Historial de recetas"],
+        ["venta", "Nueva venta en cuatro pasos"],
+        ["produccion", "Producción con proveedores"],
+        ["caja", "Caja y cierres"],
+        ["catalogo", "Catálogo y precios"],
+      ],
+      [
+        ["panel", "Panel en el móvil"],
+        ["pedidos", "Pedidos en el móvil"],
+        ["produccion", "Producción en el móvil"],
+      ],
+    ),
     mockup: { tipo: "panel", acento: "#F2B705", fondo: "#FDF6DD", texto: "#17132A" },
   },
   {
@@ -65,6 +104,23 @@ export const PROYECTOS: Proyecto[] = [
     ],
     resultado: null,
     tecnologias: ["Next.js", "Supabase", "Capacitor", "WhatsApp"],
+    portada: "/sites/turnoflash-panel.png",
+    capturas: capturas(
+      "turnoflash",
+      [
+        ["panel", "Resumen del día"],
+        ["agenda-semana", "Agenda semanal"],
+        ["servicios", "Servicios y precios"],
+        ["viaje-detalle", "Salida con reservas de pasajes"],
+        ["reportes", "Reportes del negocio"],
+        ["reserva-publica", "Página pública de reservas"],
+      ],
+      [
+        ["panel", "Panel en el móvil"],
+        ["agenda", "Agenda en el móvil"],
+        ["reserva-publica", "Reserva pública en el móvil"],
+      ],
+    ),
     mockup: { tipo: "movil", acento: "#F2B705", fondo: "#17132A", texto: "#FFFFFF" },
   },
   {
@@ -86,6 +142,20 @@ export const PROYECTOS: Proyecto[] = [
     ],
     resultado: null,
     tecnologias: ["Next.js", "Supabase", "Capacitor", "FullCalendar"],
+    portada: "/sites/turnia-calendario.png",
+    capturas: capturas(
+      "turnia",
+      [
+        ["calendario", "Calendario de turnos"],
+        ["panel", "Panel de administración"],
+        ["agenda", "Agenda del día"],
+        ["estadisticas", "Estadísticas"],
+      ],
+      [
+        ["calendario", "Turnos en el móvil"],
+        ["panel", "Panel en el móvil"],
+      ],
+    ),
     mockup: { tipo: "panel", acento: "#5B21B6", fondo: "#EFEAFB", texto: "#17132A" },
   },
   {
@@ -107,6 +177,18 @@ export const PROYECTOS: Proyecto[] = [
     ],
     resultado: null,
     tecnologias: ["Next.js", "Supabase", "Capacitor"],
+    portada: "/sites/followit-pedidos.png",
+    capturas: capturas(
+      "followit",
+      [
+        ["pedidos", "Pedidos del negocio"],
+        ["panel", "Panel del negocio"],
+        ["detalle-pedido", "Detalle de un pedido"],
+      ],
+      [
+        ["pedidos", "Pedidos en el móvil"],
+      ],
+    ),
     mockup: { tipo: "movil", acento: "#F2B705", fondo: "#5B21B6", texto: "#FFFFFF" },
   },
   {
@@ -128,7 +210,100 @@ export const PROYECTOS: Proyecto[] = [
     ],
     resultado: null,
     tecnologias: ["Next.js", "Supabase", "GraphQL"],
+    portada: "/sites/klaushop-home.png",
+    capturas: capturas(
+      "klaushop",
+      [
+        ["home", "Portada de la tienda"],
+        ["shop", "Catálogo"],
+        ["product", "Ficha de producto"],
+        ["cart", "Carrito con pedido por WhatsApp"],
+        ["admin-dashboard", "Panel de administración"],
+        ["admin-orders", "Gestión de pedidos"],
+        ["admin-products", "Gestión de productos"],
+      ],
+      [
+        ["home", "Tienda en el móvil"],
+        ["product", "Producto en el móvil"],
+        ["admin-orders", "Pedidos en el móvil"],
+      ],
+    ),
     mockup: { tipo: "panel", acento: "#5B21B6", fondo: "#FDF6DD", texto: "#17132A" },
+  },
+  {
+    slug: "invoxa",
+    nombre: "Invoxa",
+    sector: "Gestión interna",
+    resumen:
+      "Facturación mensual de colaboradores: el administrador pide las facturas y cada persona genera la suya, con número consecutivo y PDF.",
+    etiquetas: ["Facturación", "Roles", "PDF"],
+    plataformas: ["Web", "Móvil"],
+    estado: "En producción",
+    reto:
+      "Cerrar el mes obligaba a perseguir a cada colaborador por correo para que enviara su factura, con datos fiscales dispersos, numeración manual y errores en los importes según la modalidad de pago.",
+    solucion: [
+      "Colaboradores, proyectos y modalidad de pago (por hora o fijo mensual) en un solo lugar.",
+      "El administrador solicita las facturas de forma individual o en lote, y el colaborador recibe el aviso.",
+      "Cada colaborador registra sus tareas, revisa la vista previa agrupada por proyecto y genera su factura en PDF.",
+      "Número consecutivo automático, con solicitud y aprobación cuando hay que cambiarlo.",
+    ],
+    resultado: null,
+    tecnologias: ["React", "Vite", "Supabase", "Capacitor"],
+    portada: "/sites/invoxa-panel.png",
+    capturas: capturas(
+      "invoxa",
+      [
+        ["panel", "Panel del administrador"],
+        ["usuarios", "Gestión de colaboradores"],
+        ["facturas", "Facturas del mes"],
+        ["usuario-inicio", "Inicio del colaborador"],
+        ["usuario-factura", "Detalle de una factura"],
+        ["usuario-nueva", "Generar la factura del mes"],
+      ],
+      [
+        ["panel", "Panel en el móvil"],
+        ["facturas", "Facturas en el móvil"],
+        ["usuario-inicio", "Inicio del colaborador en el móvil"],
+        ["usuario-nueva", "Generar factura en el móvil"],
+      ],
+    ),
+    mockup: { tipo: "panel", acento: "#F2B705", fondo: "#17132A", texto: "#FFFFFF" },
+  },
+  {
+    slug: "self-inspection",
+    nombre: "Self Inspection",
+    sector: "Seguridad en obra",
+    resumen:
+      "Inspecciones de seguridad en obra con checklists, fotos y GPS desde el móvil, informes en PDF y ranking por inspector.",
+    etiquetas: ["Inspecciones", "Móvil", "PDF"],
+    plataformas: ["Web", "Android", "iOS"],
+    estado: "En producción",
+    reto:
+      "Las inspecciones de seguridad en obra se hacían en papel o en hojas sueltas: sin fotos ordenadas, sin ubicación y con informes que tardaban días en llegar a quien tenía que actuar.",
+    solucion: [
+      "Checklists digitales por tipo de instalación y de actividad, con fotos, GPS y observaciones.",
+      "Roles diferenciados: administración, jefes de obra, jefes de trabajo e inspectores, cada uno con sus permisos.",
+      "Informes en PDF generados al momento.",
+      "Ranking de desempeño por inspector y notificaciones en tiempo real.",
+    ],
+    resultado: null,
+    tecnologias: ["Next.js", "Supabase", "Capacitor"],
+    portada: "/sites/selfinspection-inicio.png",
+    capturas: capturas(
+      "selfinspection",
+      [
+        ["inicio", "Inicio con el resumen de una inspección"],
+        ["inspecciones", "Listado de inspecciones con filtros"],
+        ["evaluaciones", "Evaluaciones y ranking de inspectores"],
+        ["usuarios", "Gestión del equipo por rol"],
+      ],
+      [
+        ["inicio", "Inicio en el móvil"],
+        ["inspecciones", "Inspecciones en el móvil"],
+        ["evaluaciones", "Evaluaciones en el móvil"],
+      ],
+    ),
+    mockup: { tipo: "movil", acento: "#F2B705", fondo: "#EFEAFB", texto: "#17132A" },
   },
 ];
 
