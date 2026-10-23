@@ -1,43 +1,48 @@
 # fullkod-web
 
-Sitio de **Fullkod** (fullkod.com): página corporativa, casos de estudio y páginas legales. Next.js 16 con App Router, TypeScript y Tailwind CSS v4.
+**Fullkod** website (fullkod.com): corporate page, case studies and legal pages. Next.js 16 (App Router), TypeScript and Tailwind CSS v4. The site copy is in Spanish; code, identifiers, comments and routes are in English.
 
-## Desarrollo
+## Development
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000
-npm run build      # build de producción
+npm run build      # production build
 npm run lint
 ```
 
-## Dónde se edita cada cosa
+## Where each thing is edited
 
-| Qué | Archivo |
+| What | File |
 |---|---|
-| Proyectos y casos de estudio (`/proyectos/<slug>`) | `src/content/proyectos.ts` |
-| Servicios, proceso, equipo, tecnologías y preguntas frecuentes | `src/content/sitio.ts` |
-| Testimonios (ahora de ejemplo, `FICTICIOS = true`) | `src/lib/testimonios.ts` |
-| Correo, WhatsApp y LinkedIn | `src/lib/contacto.ts` |
-| Datos del titular para aviso legal y privacidad (`BORRADOR = true`) | `src/lib/legal.ts` |
-| URL y descripción del sitio (SEO) | `src/lib/sitio.ts` |
+| Projects and case studies (`/projects/<slug>`) | `src/content/projects.ts` |
+| Services, process, team, technologies and FAQ | `src/content/home.ts` |
+| Testimonials | `src/lib/testimonials.ts` |
+| Email, WhatsApp and LinkedIn | `src/lib/contact.ts` |
+| Owner data for the legal notice and privacy policy (`DRAFT = true`) | `src/lib/legal.ts` |
+| Site URL and description (SEO) | `src/lib/site.ts` |
 
-Los campos en `null` no se muestran (o salen como «[pendiente]» en las páginas legales). Antes de publicar: testimonios reales, datos del titular, roles del equipo y contacto.
+Fields set to `null` are not shown (or render as "[pendiente]" on the legal pages). Before publishing: owner data, team roles and contact details.
 
-## Formulario de contacto
+## Routes
 
-`src/app/api/contacto/route.ts` reenvía los mensajes por correo con [Resend](https://resend.com). Configura las variables de `.env.example` en `.env.local` o en Vercel. Sin ellas, el formulario responde que aún no está activo.
+`/` · `/projects/<slug>` · `/legal-notice` · `/privacy` · `/cookies` · `/api/contact`. Home anchors: `#projects`, `#services`, `#process`, `#team`, `#clients`, `#faq`, `#contact`.
 
-## Marca
+## Contact form
 
-- Logos y favicons vienen del kit de `Fullkod/brand` (copiados a `public/`). Si cambia el logo, se recopia desde `kit/logo/` y `kit/web/`; no se escribe el logo con texto.
-- El símbolo en dos piezas (`<` violeta y `>` dorado) está en `src/components/simbolo.tsx`, para animarlo.
-- Colores, tipografías (Outfit, DM Sans y JetBrains Mono) y animaciones están en `src/app/globals.css`.
+`src/app/api/contact/route.ts` forwards messages by email with [Resend](https://resend.com). Set the variables from `.env.example` (`RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM`) in `.env.local` or in Vercel. Without them the form answers that it is not active yet.
+
+## Brand
+
+- Logos and favicons come from the `Fullkod/brand` kit (copied into `public/`). If the logo changes, copy it again from `kit/logo/` and `kit/web/`; never type the logo out as text.
+- The two-piece symbol (violet `<` and gold `>`) lives in `src/components/symbol.tsx`, so it can be animated.
+- Colors, fonts (Outfit, DM Sans and JetBrains Mono) and animations are in `src/app/globals.css`.
+- Screenshots in `public/sites/` are named `<project>-<screen>.png`, with the `-mobile` suffix for the phone version.
 
 ## SEO
 
-Metadatos y Open Graph en `src/app/layout.tsx`, imagen para compartir en `src/app/opengraph-image.tsx`, `sitemap.ts`, `robots.ts` y datos estructurados (Organization y FAQPage). Estadísticas con Vercel Web Analytics, sin cookies.
+Metadata and Open Graph in `src/app/layout.tsx`, share image in `src/app/opengraph-image.tsx`, `sitemap.ts`, `robots.ts` and structured data (Organization and FAQPage). Visit stats with Vercel Web Analytics, cookieless.
 
-## Despliegue
+## Deployment
 
-Pendiente: conectar el repo a Vercel y apuntar el dominio `fullkod.com`.
+Pending: connect the repo to Vercel and point the `fullkod.com` domain.

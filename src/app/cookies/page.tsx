@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PaginaLegal } from "@/components/pagina-legal";
+import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
   title: "Política de cookies",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Cookies() {
   return (
-    <PaginaLegal titulo="Política de cookies">
+    <LegalPage title="Política de cookies">
       <h2>¿Usamos cookies?</h2>
       <p>
         No. Este sitio no instala cookies propias ni de terceros, ni con fines analíticos ni
@@ -32,8 +32,8 @@ export default function Cookies() {
       <p>
         Si en el futuro añadimos cookies que necesiten tu consentimiento, actualizaremos esta
         página y te pediremos permiso antes de instalarlas. Más información sobre cómo tratamos
-        tus datos en la <Link href="/privacidad">política de privacidad</Link>.
+        tus datos en la <Link href="/privacy">política de privacidad</Link>.
       </p>
-    </PaginaLegal>
+    </LegalPage>
   );
 }

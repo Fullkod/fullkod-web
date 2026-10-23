@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-// Imagen que aparece al compartir el enlace (WhatsApp, LinkedIn, X…).
+// Image shown when the link is shared (WhatsApp, LinkedIn, X...).
 export const alt = "Fullkod — Full solutions. Fully coded.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -29,7 +29,7 @@ export default function Image() {
             <span style={{ color: "#F2B705" }}>Fully coded.</span>
           </div>
           <div style={{ marginTop: 36, fontSize: 30, color: "rgba(255,255,255,0.75)" }}>
-            fullkod.com · España y Latinoamérica
+            fullkod.com · Para negocios de todo el mundo
           </div>
         </div>
         <svg width="340" height="340" viewBox="0 0 256 256">

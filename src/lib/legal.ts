@@ -1,15 +1,16 @@
-// Datos del titular para el aviso legal y la privacidad (LSSI y RGPD).
-// BORRADOR: los campos en null salen como «[pendiente]» y las páginas legales muestran un aviso.
-// Completa todos los campos y revisa los textos (idealmente con un asesor) antes de publicar,
-// y entonces pon BORRADOR = false.
-export const BORRADOR = true;
+// Site owner data for the legal notice and the privacy policy (LSSI and GDPR).
+// `name` and `email` are required; a null one renders as "[pendiente]". `taxId`, `address` and
+// `registry` are optional and only shown when set. While DRAFT is true the legal pages show a draft notice.
+// Fill in every field and review the texts (ideally with an advisor) before publishing,
+// then set DRAFT = false.
+export const DRAFT = true;
 
-export const TITULAR = {
-  nombre: null as string | null, // razón social o nombre del titular
-  nif: null as string | null,
-  domicilio: null as string | null,
-  email: null as string | null,
-  registro: null as string | null, // datos registrales, si es sociedad
+export const OWNER = {
+  name: "Roberto Gabriel Cabrera Álvarez" as string | null, // legal name or owner's name
+  taxId: null as string | null, // optional: shown only when set
+  address: null as string | null, // optional: shown only when set
+  email: "robert.cabrer92@gmail.com" as string | null,
+  registry: null as string | null, // optional: company registry data, if incorporated
 };
 
-export const ACTUALIZADO = "22 de octubre de 2026";
+export const LAST_UPDATED = "22 de octubre de 2026";

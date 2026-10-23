@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, JetBrains_Mono, Outfit } from "next/font/google";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
-import { Cabecera } from "@/components/cabecera";
-import { Pie } from "@/components/pie";
-import { SITIO } from "@/lib/sitio";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { SITE } from "@/lib/site";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -23,12 +23,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITIO.url),
+  metadataBase: new URL(SITE.url),
   title: {
     default: "Fullkod — Full solutions. Fully coded.",
     template: "%s · Fullkod",
   },
-  description: SITIO.descripcion,
+  description: SITE.description,
   applicationName: "Fullkod",
   keywords: [
     "software a medida",
@@ -38,8 +38,6 @@ export const metadata: Metadata = {
     "SaaS",
     "e-commerce",
     "automatización",
-    "España",
-    "Latinoamérica",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -48,12 +46,12 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Fullkod",
     title: "Fullkod — Full solutions. Fully coded.",
-    description: SITIO.descripcion,
+    description: SITE.description,
   },
   twitter: {
     card: "summary_large_image",
     title: "Fullkod — Full solutions. Fully coded.",
-    description: SITIO.descripcion,
+    description: SITE.description,
   },
   icons: {
     icon: [
@@ -69,15 +67,15 @@ export const viewport: Viewport = {
   themeColor: "#24104F",
 };
 
-const organizacion = {
+const organization = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Fullkod",
-  url: SITIO.url,
-  logo: `${SITIO.url}/icon-512.png`,
+  url: SITE.url,
+  logo: `${SITE.url}/icon-512.png`,
   slogan: "Full solutions. Fully coded.",
-  description: SITIO.descripcion,
-  areaServed: ["ES", "Latinoamérica"],
+  description: SITE.description,
+  areaServed: "Worldwide",
 };
 
 export default function RootLayout({
@@ -92,20 +90,20 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizacion).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(organization).replace(/</g, "\\u003c"),
           }}
         />
         <a
-          href="#contenido"
+          href="#content"
           className="sr-only z-[60] rounded-full bg-gold px-5 py-3 font-semibold text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
           Saltar al contenido
         </a>
-        <Cabecera />
-        <main id="contenido" className="flex-1">
+        <Header />
+        <main id="content" className="flex-1">
           {children}
         </main>
-        <Pie />
+        <Footer />
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
