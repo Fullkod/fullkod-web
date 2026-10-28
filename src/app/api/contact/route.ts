@@ -14,6 +14,14 @@ function text(value: unknown, max: number) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 export async function POST(request: Request) {
   let data: Record<string, unknown>;
   try {
@@ -65,6 +73,13 @@ export async function POST(request: Request) {
         `${t.labelCompany}: ${company || "—"}`,
         "",
         message,
+      ].join("\n"),
+      // Some clients (the Resend inbox among them) collapse plain-text line breaks.
+      html: [
+        `<p><strong>${t.labelName}:</strong> ${escapeHtml(name)}<br>`,
+        `<strong>${t.labelEmail}:</strong> ${escapeHtml(email)}<br>`,
+        `<strong>${t.labelCompany}:</strong> ${escapeHtml(company || "—")}</p>`,
+        `<p style="white-space:pre-wrap">${escapeHtml(message)}</p>`,
       ].join("\n"),
     }),
   });
