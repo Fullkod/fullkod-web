@@ -4,6 +4,40 @@
 import type { ProjectCopy } from "@/content/project-types";
 
 export const PROJECTS_EN_COPY: Record<string, ProjectCopy> = {
+  kshop: {
+    sector: "Retail",
+    summary:
+      "A platform to open your online store in an afternoon: your own address, orders over WhatsApp, prices in CUP, USD or EUR, themes made your own and an Android app with your logo.",
+    tags: ["E-commerce", "Multi-store", "WhatsApp", "Customizable"],
+    platforms: ["Web", "Android"],
+    status: "In production · kshop.fullkod.com",
+    challenge:
+      "Kshop grew out of klauShop, a store we built to measure: other businesses wanted the same without paying for custom development. In Cuba most of them get paid in cash or by bank transfer and close the sale over WhatsApp, so foreign platforms, which require a card and online payment, don't work for them.",
+    solution: [
+      "Each business creates its store in minutes, with its own address (yourstore.kshop.fullkod.com) or its own domain, and its data isolated from the others.",
+      "Fully customizable: six starting styles, your choice of colors, font and corners, and a home page built from sections with banners, countdown offers, collections and reviews. The store, the app and the banners change together.",
+      "Customers fill their cart and the order arrives ready to confirm over WhatsApp; they pay on delivery, in cash or by transfer, with home delivery or in-store pickup.",
+      "Prices in CUP, USD or EUR at the day's rate, products with sizes and colors, and the whole catalog imported from Excel.",
+      "Offers, coupons and automatic WhatsApp notices whenever an order changes.",
+      "Business dashboard with the day's and month's sales, orders, customers, several warehouses, finances and a team with permissions.",
+      "An Android app with each store's logo for its customers, and Kshop Admin to run the business from the phone.",
+      "Base and Pro plans with a 30-day trial, paid in cash with no card.",
+    ],
+    result: null,
+    alts: [
+      "Kshop page to open a store",
+      "A store's home page with the Kshop theme",
+      "The same store with the Dark theme",
+      "The same store with the Warm theme",
+      "Product page with sizes, colors, an offer and the price in another currency",
+      "Appearance: style, colors and live preview",
+      "Business dashboard with the month's sales",
+      "Catalog with variants, prices and stock",
+      "Store on mobile",
+      "Product added to the cart, with a WhatsApp order",
+      "Cart with a coupon and free shipping",
+    ],
+  },
   lensspace: {
     sector: "Optical shops",
     summary:
@@ -108,35 +142,6 @@ export const PROJECTS_EN_COPY: Record<string, ProjectCopy> = {
       "The business's orders",
       "Business dashboard",
       "Order detail",
-      "Orders on mobile",
-    ],
-  },
-  klaushop: {
-    sector: "Retail",
-    summary:
-      "Online store with orders confirmed over WhatsApp and a dashboard to manage products, collections and orders.",
-    tags: ["E-commerce", "WhatsApp", "Management dashboard"],
-    platforms: ["Web"],
-    status: null,
-    challenge:
-      "Selling online where card payments aren't always possible: the store had to reserve the order and close it through the channel customers already use.",
-    solution: [
-      "Catalog with search and collections.",
-      "Cart that is kept when logging in.",
-      "Order reserved in the store and confirmed over WhatsApp.",
-      "Dashboard to manage products, collections, users and orders.",
-    ],
-    result: null,
-    alts: [
-      "Store home page",
-      "Catalog",
-      "Product page",
-      "Cart with WhatsApp order",
-      "Administration dashboard",
-      "Order management",
-      "Product management",
-      "Store on mobile",
-      "Product on mobile",
       "Orders on mobile",
     ],
   },

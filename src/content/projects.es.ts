@@ -9,6 +9,50 @@ import { buildScreenshots, type Project } from "@/content/project-types";
 
 export const PROJECTS_ES: Project[] = [
   {
+    slug: "kshop",
+    name: "Kshop",
+    sector: "Comercio",
+    summary:
+      "Plataforma para abrir tu tienda online en una tarde: tu propia dirección, pedidos por WhatsApp, precios en CUP, USD o EUR, temas a tu medida y app Android con tu logo.",
+    tags: ["E-commerce", "Multitienda", "WhatsApp", "Personalizable"],
+    platforms: ["Web", "Android"],
+    status: "En producción · kshop.fullkod.com",
+    challenge:
+      "Kshop nace de klauShop, una tienda que hicimos a medida: otros negocios querían lo mismo sin pagar un desarrollo propio. En Cuba la mayoría cobra en efectivo o por transferencia y cierra la venta por WhatsApp, así que las plataformas de fuera, que piden tarjeta y pago en línea, no les sirven.",
+    solution: [
+      "Cada negocio crea su tienda en minutos, con su dirección (tutienda.kshop.fullkod.com) o su propio dominio, y sus datos aislados de los demás.",
+      "Totalmente personalizable: seis estilos de partida, colores, letra y esquinas a elegir, y una portada por secciones con banners, ofertas con cuenta atrás, colecciones y opiniones. La tienda, la app y los banners cambian a la vez.",
+      "El cliente arma su carrito y el pedido llega listo para confirmar por WhatsApp; paga al recibir, en efectivo o por transferencia, con envío a domicilio o recogida en la tienda.",
+      "Precios en CUP, USD o EUR con la tasa del día, productos con tallas y colores, y catálogo completo importado desde Excel.",
+      "Ofertas, cupones y avisos automáticos por WhatsApp en cada cambio del pedido.",
+      "Panel del negocio con ventas del día y del mes, pedidos, clientes, varios almacenes, finanzas y equipo con permisos.",
+      "App Android con el logo de cada tienda para sus clientes, y Kshop Admin para llevar el negocio desde el móvil.",
+      "Planes Base y Pro con 30 días de prueba, pagados en efectivo y sin tarjeta.",
+    ],
+    result: null,
+    technologies: ["Next.js", "Supabase", "Capacitor", "WhatsApp", "Vercel"],
+    cover: "/sites/kshop-landing.png",
+    screenshots: buildScreenshots(
+      "kshop",
+      [
+        ["landing", "Página de Kshop para abrir una tienda"],
+        ["home", "Portada de una tienda con el tema Kshop"],
+        ["theme-dark", "La misma tienda con el tema Oscuro"],
+        ["theme-warm", "La misma tienda con el tema Cálido"],
+        ["product", "Ficha con tallas, colores, oferta y precio en otra moneda"],
+        ["admin-appearance", "Apariencia: estilo, colores y vista previa en vivo"],
+        ["admin-dashboard", "Panel del negocio con las ventas del mes"],
+        ["admin-products", "Catálogo con variantes, precios y stock"],
+      ],
+      [
+        ["home", "Tienda en el móvil"],
+        ["product", "Producto añadido al carrito, con pedido por WhatsApp"],
+        ["cart", "Carrito con cupón y envío gratis"],
+      ],
+    ),
+    mockup: { kind: "dashboard", accent: "#F2B705", background: "#5B21B6", text: "#FFFFFF" },
+  },
+  {
     slug: "lensspace",
     name: "LensSpace",
     sector: "Ópticas",
@@ -154,45 +198,6 @@ export const PROJECTS_ES: Project[] = [
       ],
     ),
     mockup: { kind: "mobile", accent: "#F2B705", background: "#5B21B6", text: "#FFFFFF" },
-  },
-  {
-    slug: "klaushop",
-    name: "klauShop",
-    sector: "Comercio",
-    summary:
-      "Tienda en línea con pedidos confirmados por WhatsApp y panel para gestionar productos, colecciones y pedidos.",
-    tags: ["E-commerce", "WhatsApp", "Panel de gestión"],
-    platforms: ["Web"],
-    status: null,
-    challenge:
-      "Vender en línea donde los pagos con tarjeta no siempre son posibles: la tienda tenía que reservar el pedido y cerrarlo por el canal que ya usan los clientes.",
-    solution: [
-      "Catálogo con búsqueda y colecciones.",
-      "Carrito que se conserva al iniciar sesión.",
-      "Pedido reservado en la tienda y confirmado por WhatsApp.",
-      "Panel para gestionar productos, colecciones, usuarios y pedidos.",
-    ],
-    result: null,
-    technologies: ["Next.js", "Supabase", "GraphQL"],
-    cover: "/sites/klaushop-home.png",
-    screenshots: buildScreenshots(
-      "klaushop",
-      [
-        ["home", "Portada de la tienda"],
-        ["shop", "Catálogo"],
-        ["product", "Ficha de producto"],
-        ["cart", "Carrito con pedido por WhatsApp"],
-        ["admin-dashboard", "Panel de administración"],
-        ["admin-orders", "Gestión de pedidos"],
-        ["admin-products", "Gestión de productos"],
-      ],
-      [
-        ["home", "Tienda en el móvil"],
-        ["product", "Producto en el móvil"],
-        ["admin-orders", "Pedidos en el móvil"],
-      ],
-    ),
-    mockup: { kind: "dashboard", accent: "#5B21B6", background: "#FDF6DD", text: "#17132A" },
   },
   {
     slug: "invoxa",
