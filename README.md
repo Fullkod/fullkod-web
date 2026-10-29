@@ -53,3 +53,8 @@ Metadata and Open Graph in `src/app/[lang]/layout.tsx` (with `hreflang` alternat
 ## Deployment
 
 Pending: connect the repo to Vercel and point the `fullkod.com` domain.
+
+<!-- fullkod-signature -->
+---
+
+<a href="https://fullkod.com/?ref=fullkod-web"><img src="https://fullkod.com/brand/fullkod-symbol.svg" width="20" height="20" align="center" alt="Fullkod"></a> Built by **[Fullkod](https://fullkod.com/?ref=fullkod-web)**
