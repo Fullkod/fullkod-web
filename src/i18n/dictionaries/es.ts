@@ -243,6 +243,7 @@ export const es = {
     status: "Estado",
     challenge: "El reto",
     solution: "La solución",
+    benefits: "Lo que gana tu negocio",
     result: "El resultado",
     screens: "Así se ve",
     stack: "Con qué lo construimos",

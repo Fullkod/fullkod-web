@@ -15,6 +15,13 @@ export function buildScreenshots(prefix: string, desktop: Screen[], mobile: Scre
   ];
 }
 
+// What a business gains by using the product. `plan` names the plan that includes it, when not every plan does.
+export type Benefit = {
+  title: string;
+  text: string;
+  plan?: string;
+};
+
 export type Project = {
   slug: string;
   name: string;
@@ -25,6 +32,7 @@ export type Project = {
   status: string | null;
   challenge: string;
   solution: string[];
+  benefits?: Benefit[];
   result: string | null;
   technologies: string[];
   cover: string | null;
@@ -41,5 +49,5 @@ export type Project = {
 // as the Spanish `screenshots` (desktop first, then mobile).
 export type ProjectCopy = Pick<
   Project,
-  "sector" | "summary" | "tags" | "platforms" | "status" | "challenge" | "solution" | "result"
+  "sector" | "summary" | "tags" | "platforms" | "status" | "challenge" | "solution" | "benefits" | "result"
 > & { alts: string[] };

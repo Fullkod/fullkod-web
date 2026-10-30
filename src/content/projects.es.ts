@@ -13,21 +13,59 @@ export const PROJECTS_ES: Project[] = [
     name: "Kshop",
     sector: "Comercio",
     summary:
-      "Plataforma para abrir tu tienda online en una tarde: tu propia dirección, pedidos por WhatsApp, precios en CUP, USD o EUR, temas a tu medida y app Android con tu logo.",
-    tags: ["E-commerce", "Multitienda", "WhatsApp", "Personalizable"],
+      "Tu tienda online y tu negocio en un solo sitio: vende las 24 horas con pedidos por WhatsApp, controla el inventario y los almacenes, organiza las entregas y sabe cada día cuánto ganas.",
+    tags: ["E-commerce", "Inventario", "Entregas", "WhatsApp"],
     platforms: ["Web", "Android"],
     status: "En producción · kshop.fullkod.com",
     challenge:
       "Kshop nace de klauShop, una tienda que hicimos a medida: otros negocios querían lo mismo sin pagar un desarrollo propio. En Cuba la mayoría cobra en efectivo o por transferencia y cierra la venta por WhatsApp, así que las plataformas de fuera, que piden tarjeta y pago en línea, no les sirven.",
     solution: [
-      "Cada negocio crea su tienda en minutos, con su dirección (tutienda.kshop.fullkod.com) o su propio dominio, y sus datos aislados de los demás.",
-      "Totalmente personalizable: seis estilos de partida, colores, letra y esquinas a elegir, y una portada por secciones con banners, ofertas con cuenta atrás, colecciones y opiniones. La tienda, la app y los banners cambian a la vez.",
-      "El cliente arma su carrito y el pedido llega listo para confirmar por WhatsApp; paga al recibir, en efectivo o por transferencia, con envío a domicilio o recogida en la tienda.",
-      "Precios en CUP, USD o EUR con la tasa del día, productos con tallas y colores, y catálogo completo importado desde Excel.",
-      "Ofertas, cupones y avisos automáticos por WhatsApp en cada cambio del pedido.",
-      "Panel del negocio con ventas del día y del mes, pedidos, clientes, varios almacenes, finanzas y equipo con permisos.",
-      "App Android con el logo de cada tienda para sus clientes, y Kshop Admin para llevar el negocio desde el móvil.",
-      "Planes Base y Pro con 30 días de prueba, pagados en efectivo y sin tarjeta.",
+      "Cada negocio abre su tienda en minutos, con su dirección (tutienda.kshop.fullkod.com) o su propio dominio, y sus datos separados de los demás.",
+      "El cliente elige productos, tallas y colores, arma su carrito y el pedido llega completo para confirmar por WhatsApp; paga al recibir, en efectivo o por transferencia.",
+      "Detrás, un panel para el negocio (y Kshop Admin en el móvil) con pedidos, inventario, almacenes, entregas, clientes, finanzas y equipo.",
+      "Planes Base y Pro con 30 días de prueba, pagados en efectivo y sin tarjeta. Lo del Pro también se puede contratar suelto.",
+    ],
+    benefits: [
+      {
+        title: "Vendes las 24 horas sin estar pegado al teléfono",
+        text: "Tu catálogo está siempre abierto, con fotos, precios y tallas. El cliente compra cuando quiere y el pedido te llega completo (productos, dirección, entrega y forma de pago): se acabó repetir precios y mandar fotos una a una.",
+      },
+      {
+        title: "Inventario al día, sin vender lo que no tienes",
+        text: "Cada pedido aparta sus unidades, así no vendes dos veces la misma. Ves qué queda de cada producto y talla, lo reservado y lo disponible, lo que se está acabando y cuánto vale tu mercancía a costo y a precio de venta. El catálogo entero se sube desde Excel.",
+      },
+      {
+        title: "Varios almacenes o puntos de venta",
+        text: "Lleva el stock de cada local o almacén por separado, decide cuál sirve cada zona de entrega, marca puntos de recogida y traspasa mercancía entre ellos con el historial de cada movimiento.",
+        plan: "Plan Pro",
+      },
+      {
+        title: "Entregas organizadas de principio a fin",
+        text: "Define tus zonas con su precio y plazo, envío gratis a partir de un importe, recogida en tienda o envío a acordar. Cada pedido avanza por estados (por confirmar, pagado, preparando, enviado, entregado) y nadie pierde el hilo.",
+      },
+      {
+        title: "Clientes informados sin escribirles a mano",
+        text: "Avisos automáticos por WhatsApp cada vez que su pedido cambia de estado, con mensajes que redactas tú. Menos «¿y mi pedido?» y más confianza para volver a comprar.",
+        plan: "Plan Pro",
+      },
+      {
+        title: "Cobras como ya cobras, en la moneda que sea",
+        text: "Efectivo, transferencia o los métodos que uses, con precios en CUP, USD o EUR a la tasa del día. Sabes qué está cobrado y qué está pendiente en cada pedido.",
+        plan: "Varias monedas: Plan Pro",
+      },
+      {
+        title: "Sabes cuánto ganas de verdad",
+        text: "Ventas del día y del mes por moneda, costo de lo vendido, margen, gastos y ganancia neta. Desglose por método de pago, zona de entrega y canal, y cierre del día para cuadrar la caja.",
+        plan: "Finanzas: Plan Pro",
+      },
+      {
+        title: "Todas tus ventas en un solo sitio",
+        text: "Los pedidos de la web, de la app y los que tomas en el local o por teléfono quedan en el mismo panel, con su cliente y su historial. Tu equipo entra con su propio acceso y permisos, también desde el móvil.",
+      },
+      {
+        title: "Más ventas, con tu marca",
+        text: "Ofertas programadas con cuenta atrás, cupones con límite de usos, envío gratis y una app Android con tu logo en el móvil de tus clientes. La tienda se viste con tus colores, tu letra y tu portada.",
+      },
     ],
     result: null,
     technologies: ["Next.js", "Supabase", "Capacitor", "WhatsApp", "Vercel"],

@@ -149,6 +149,26 @@ export default async function CaseStudy({ params }: Props) {
         </div>
       </section>
 
+      {p.benefits?.length ? (
+        <section className="bg-white py-24 text-ink">
+          <div className="mx-auto max-w-6xl px-4">
+            <Eyebrow>{t.benefits}</Eyebrow>
+            <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {p.benefits.map((b) => (
+                <li key={b.title} className="reveal flex flex-col rounded-3xl border border-violet/10 bg-cream p-8">
+                  <BrandSymbol className="h-6 w-6" />
+                  <h3 className="mt-5 font-display text-xl font-semibold leading-snug">{b.title}</h3>
+                  <p className="mt-3 leading-relaxed text-slate">{b.text}</p>
+                  {b.plan ? (
+                    <p className="mt-auto pt-5 font-mono text-xs uppercase tracking-[0.18em] text-violet">{b.plan}</p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
+
       {p.screenshots.length > 0 ? (
         <section className="relative overflow-hidden bg-violet-night py-24 text-white">
           <GoldEdges />

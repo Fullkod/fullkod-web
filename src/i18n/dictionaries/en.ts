@@ -240,6 +240,7 @@ export const en: Dictionary = {
     status: "Status",
     challenge: "The challenge",
     solution: "The solution",
+    benefits: "What your business gains",
     result: "The result",
     screens: "What it looks like",
     stack: "What we built it with",

@@ -7,21 +7,59 @@ export const PROJECTS_EN_COPY: Record<string, ProjectCopy> = {
   kshop: {
     sector: "Retail",
     summary:
-      "A platform to open your online store in an afternoon: your own address, orders over WhatsApp, prices in CUP, USD or EUR, themes made your own and an Android app with your logo.",
-    tags: ["E-commerce", "Multi-store", "WhatsApp", "Customizable"],
+      "Your online store and your business in one place: sell around the clock with orders over WhatsApp, keep track of stock and warehouses, organize deliveries and know every day how much you earn.",
+    tags: ["E-commerce", "Inventory", "Deliveries", "WhatsApp"],
     platforms: ["Web", "Android"],
     status: "In production · kshop.fullkod.com",
     challenge:
       "Kshop grew out of klauShop, a store we built to measure: other businesses wanted the same without paying for custom development. In Cuba most of them get paid in cash or by bank transfer and close the sale over WhatsApp, so foreign platforms, which require a card and online payment, don't work for them.",
     solution: [
-      "Each business creates its store in minutes, with its own address (yourstore.kshop.fullkod.com) or its own domain, and its data isolated from the others.",
-      "Fully customizable: six starting styles, your choice of colors, font and corners, and a home page built from sections with banners, countdown offers, collections and reviews. The store, the app and the banners change together.",
-      "Customers fill their cart and the order arrives ready to confirm over WhatsApp; they pay on delivery, in cash or by transfer, with home delivery or in-store pickup.",
-      "Prices in CUP, USD or EUR at the day's rate, products with sizes and colors, and the whole catalog imported from Excel.",
-      "Offers, coupons and automatic WhatsApp notices whenever an order changes.",
-      "Business dashboard with the day's and month's sales, orders, customers, several warehouses, finances and a team with permissions.",
-      "An Android app with each store's logo for its customers, and Kshop Admin to run the business from the phone.",
-      "Base and Pro plans with a 30-day trial, paid in cash with no card.",
+      "Each business opens its store in minutes, with its own address (yourstore.kshop.fullkod.com) or its own domain, and its data kept apart from the others.",
+      "Customers pick products, sizes and colors, fill their cart and the order arrives complete, ready to confirm over WhatsApp; they pay on delivery, in cash or by transfer.",
+      "Behind it, a dashboard for the business (and Kshop Admin on the phone) with orders, stock, warehouses, deliveries, customers, finances and the team.",
+      "Base and Pro plans with a 30-day trial, paid in cash with no card. Pro features can also be added one by one.",
+    ],
+    benefits: [
+      {
+        title: "Sell around the clock without living on your phone",
+        text: "Your catalog is always open, with photos, prices and sizes. Customers buy whenever they want and the order reaches you complete (products, address, delivery and payment method): no more repeating prices and sending photos one by one.",
+      },
+      {
+        title: "Up-to-date stock, never selling what you don't have",
+        text: "Every order sets its units aside, so you never sell the same one twice. You see what's left of each product and size, what's reserved and what's available, what's running low and what your stock is worth at cost and at retail price. The whole catalog uploads from Excel.",
+      },
+      {
+        title: "Several warehouses or points of sale",
+        text: "Keep each shop's or warehouse's stock separately, choose which one serves each delivery zone, set pickup points and transfer goods between them with a history of every movement.",
+        plan: "Pro plan",
+      },
+      {
+        title: "Deliveries organized from start to finish",
+        text: "Set your zones with their price and delivery time, free shipping above an amount, in-store pickup or delivery to be agreed. Each order moves through its stages (to confirm, paid, preparing, shipped, delivered) and nobody loses track.",
+      },
+      {
+        title: "Customers kept informed without typing a word",
+        text: "Automatic WhatsApp notices whenever their order changes, with messages you write yourself. Fewer \"where's my order?\" and more trust to buy again.",
+        plan: "Pro plan",
+      },
+      {
+        title: "Get paid the way you already do, in any currency",
+        text: "Cash, transfer or whatever methods you use, with prices in CUP, USD or EUR at the day's rate. You know what's been collected and what's still pending on every order.",
+        plan: "Several currencies: Pro plan",
+      },
+      {
+        title: "Know what you really earn",
+        text: "The day's and month's sales by currency, cost of goods sold, margin, expenses and net profit. Breakdown by payment method, delivery zone and channel, and an end-of-day close to balance the till.",
+        plan: "Finances: Pro plan",
+      },
+      {
+        title: "All your sales in one place",
+        text: "Orders from the web, the app and the ones you take in the shop or over the phone land in the same dashboard, with their customer and history. Your team signs in with its own access and permissions, from the phone too.",
+      },
+      {
+        title: "More sales, under your brand",
+        text: "Scheduled offers with a countdown, coupons with usage limits, free shipping and an Android app with your logo on your customers' phones. The store wears your colors, your font and your home page.",
+      },
     ],
     result: null,
     alts: [
