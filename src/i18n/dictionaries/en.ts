@@ -246,6 +246,8 @@ export const en: Dictionary = {
     stack: "What we built it with",
     nextProject: "Next project",
     cta: "I want something like this",
+    midTitle: "Want it for your business?",
+    midText: "We set it up with your products, your prices and your brand. Tell us what you need and we answer ourselves, with no middlemen.",
   },
 
   notFound: {

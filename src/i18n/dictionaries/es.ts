@@ -249,6 +249,8 @@ export const es = {
     stack: "Con qué lo construimos",
     nextProject: "Siguiente proyecto",
     cta: "Quiero algo así",
+    midTitle: "¿Lo quieres para tu negocio?",
+    midText: "Lo ponemos a funcionar con tus productos, tus precios y tu marca. Cuéntanos qué necesitas y te respondemos nosotros, sin intermediarios.",
   },
 
   notFound: {

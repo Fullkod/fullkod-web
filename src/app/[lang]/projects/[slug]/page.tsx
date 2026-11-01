@@ -112,6 +112,12 @@ export default async function CaseStudy({ params }: Props) {
                 </div>
               ) : null}
             </dl>
+            <Link
+              href={`/${lang}#contact`}
+              className="gold-button mt-10 inline-block rounded-full bg-gold px-8 py-4 font-display text-lg font-semibold text-ink"
+            >
+              {t.cta}
+            </Link>
           </div>
           <div
             className="symbol-float flex items-center justify-center rounded-3xl p-10 shadow-2xl shadow-black/40"
@@ -168,6 +174,22 @@ export default async function CaseStudy({ params }: Props) {
           </div>
         </section>
       ) : null}
+
+      {/* Mid-page call to action */}
+      <section className="bg-gold py-16 text-ink">
+        <div className="reveal mx-auto flex max-w-6xl flex-col gap-6 px-4 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-2xl">
+            <p className="font-display text-3xl font-bold leading-tight md:text-4xl">{t.midTitle}</p>
+            <p className="mt-3 text-lg leading-relaxed">{t.midText}</p>
+          </div>
+          <Link
+            href={`/${lang}#contact`}
+            className="self-start rounded-full bg-ink px-8 py-4 font-display text-lg font-semibold text-white transition hover:bg-violet md:self-auto"
+          >
+            {t.cta}
+          </Link>
+        </div>
+      </section>
 
       {p.screenshots.length > 0 ? (
         <section className="relative overflow-hidden bg-violet-night py-24 text-white">
