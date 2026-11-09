@@ -4,7 +4,7 @@
 // Once set, the buttons and the footer pick them up automatically.
 export const CONTACT = {
   email: "contact@fullkod.com" as string | null,
-  whatsapp: "5353077035" as string | null,
+  whatsapp: "15752639686" as string | null,
   linkedin: null as string | null,
 };
 
